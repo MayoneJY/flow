@@ -1,0 +1,16 @@
+body {
+   font-family: "Noto Sans KR", sans-serif;
+   font-style: normal;
+}
+
+#customList {
+   border: black 1px solid;
+   padding: 10px;
+   margin-top: 10px;
+}
+
+.customItem {
+   display: inline-block;
+   border: black 1px solid;
+   padding: 5px 10px;
+}

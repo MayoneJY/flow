@@ -2,9 +2,57 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
     <title>Title</title>
 </head>
 <body>
-    Hello World!
+    <h1>파일 확장자 차단</h1>
+    <hr/>
+    <h3>고정 확장자</h3>
+    <hr/>
+    <label for="bat">
+        <input type="checkbox" value="bat" name="bat" id="bat"/> bat
+    </label>
+    <label for="cmd">
+        <input type="checkbox" value="cmd" name="cmd" id="cmd"/> cmd
+    </label>
+    <label for="com">
+        <input type="checkbox" value="com" name="com" id="com"/> com
+    </label>
+    <label for="cpl">
+        <input type="checkbox" value="cpl" name="cpl" id="cpl"/> cpl
+    </label>
+    <label for="exe">
+        <input type="checkbox" value="exe" name="exe" id="exe"/> exe
+    </label>
+    <label for="scr">
+        <input type="checkbox" value="scr" name="scr" id="scr"/> scr
+    </label>
+    <label for="js">
+        <input type="checkbox" value="js" name="js" id="js"/> js
+    </label>
+    <h3>커스텀 확장자</h3>
+    <hr/>
+    <label for="custom">
+        <input type="text" name="custom" id="custom" placeholder="확장자 입력"/>
+    </label>
+    <input type="button" value="추가" id="add"/>
+    <div id="customList">
+        <div id="listCount">
+            <span>0/200</span>
+            <div class="customItem">
+                sh
+            </div>
+            <div class="customItem">
+                ju
+            </div>
+            <div class="customItem">
+                ch
+            </div>
+        </div>
+    </div>
 </body>
 </html>
