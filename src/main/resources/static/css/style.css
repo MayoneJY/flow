@@ -97,9 +97,9 @@ button {
    color: #fff;
 }
 
-/*button:hover {*/
-/*   border: 1px solid #6449fc;*/
-/*}*/
+#add:hover {
+   border: 1px solid #6449fc;
+}
 
 .btn-checked {
    background: #ff5e5e;
