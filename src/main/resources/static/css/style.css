@@ -1,16 +1,131 @@
 body {
    font-family: "Noto Sans KR", sans-serif;
    font-style: normal;
+   background: #f5edf6;
+}
+#main {
+   max-width: 720px;
+   margin: 0 auto;
 }
 
-#customList {
-   border: black 1px solid;
+#main-container {
+   width: 100%;
+   background: #fff;
+   padding: 20px;
+   border: 1px solid #ccc;
+   border-radius: 10px;
+   box-shadow: 0 0 15px rgba(0, 0, 0, 0.04)
+}
+
+#custom-list {
+   border: 1px solid #ddd;
    padding: 10px;
    margin-top: 10px;
 }
 
-.customItem {
-   display: inline-block;
-   border: black 1px solid;
-   padding: 5px 10px;
+#list-count {
+   color: #777;
+   float: right;
+}
+
+div {
+   display: block;
+   box-sizing: border-box;
+}
+
+#logo {
+   margin: 40px 0 20px 0;
+   display: block;
+}
+
+.sub-title {
+   font-size: 20px;
+   font-weight: 500;
+   margin-bottom: 10px;
+   color: #333;
+}
+
+button {
+   width: auto;
+   min-width: 84px;
+   height: 32px;
+   padding: 0 30px;
+   border-radius: 220px;
+   font-weight: 700;
+   font-size: 13px;
+   background: #eee;
+   color: #777;
+   margin-left: 8px;
+   margin-bottom: 10px;
+   cursor: pointer;
+   border: 0;
+}
+
+/*button:hover {*/
+/*   border: 1px solid #6449fc;*/
+/*}*/
+
+.btn-checked {
+   background: #ff5e5e;
+   color: #fff;
+}
+
+#fixed-box {
+   margin-bottom: 10px;
+}
+
+hr {
+   border: #eeeeee 1px solid;
+}
+
+#custom-input-text {
+   width: 100%;
+   outline: none;
+}
+
+#custom-input-text[contenteditable] {
+   padding: 11px 75px 11px 20px;
+   min-height: 44px;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+   box-sizing: border-box;
+   width: 100%;
+   color: #555;
+   word-break: break-word;
+   white-space: pre-wrap;
+   cursor: text;
+}
+
+#custom-input-text[contenteditable]:empty:before {
+   content: attr(placeholder);
+   color: #999;
+}
+
+#custom-input-text[contenteditable=true]:hover,
+#custom-input-text[contenteditable=true]:focus {
+   border-color: #555;
+   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+fieldset {
+   position: relative;
+   margin: 0;
+   padding: 0;
+   border: 0;
+}
+
+input{
+   outline: none;
+}
+
+#add {
+   position: absolute;
+   top: 8px;
+   right: 10px;
+   height: 28px;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+   cursor: pointer;
+   text-align: center;
+   background: #fff;
 }
