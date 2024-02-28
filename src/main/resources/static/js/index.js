@@ -93,16 +93,39 @@ $("#custom-add").on("click", function(){
             // TODO: 알림박스로 교체
         }
         else{
-            $("#custom-list").append(
-                `<button class="custom-item">
-                ${text}
-                <span class="material-symbols-outlined custom-trash-icon">
-                    delete
-                </span>
-            </button>`
-            );
-            customItems.push(text);
-            $("#custom-input-text").text("");
+            try {
+                $.ajax({
+                    url: "/insertCustomExtension",
+                    type: "POST",
+                    data: {extension: text},
+                    traditional: true,
+                }).then(data => {
+                    if (data === true) {
+                        customItems.push(text);
+                        $("#custom-list").append(
+                            `<button class="custom-item">
+                                ${text}
+                                <span class="material-symbols-outlined custom-trash-icon">
+                                    delete
+                                </span>
+                            </button>`
+                        );
+                        $(".custom-item").on("click", function () {
+                            $(this).remove();
+                            customItems.splice(customItems.indexOf($(this).text()), 1);
+                        })
+                        $customInputText.text("");
+                    } else {
+                        //     TODO: db에 추가하지 못했을 때의 처리
+                    }
+
+                }).catch((error) => {
+                    console.error(error);
+                });
+            }
+            catch (e) {
+                console.log(e);
+            }
         }
     }
     else{

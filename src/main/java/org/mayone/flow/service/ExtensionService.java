@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ExtensionService {
     String[] selectExtensions();
+
+    boolean insertExtension(String extension);
 }

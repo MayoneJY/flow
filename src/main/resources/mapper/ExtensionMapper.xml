@@ -4,4 +4,7 @@
     <select id="selectExtensions" resultType='java.lang.String'>
         SELECT extension FROM customextensions
     </select>
+    <insert id="insertCustomExtension" parameterType="java.lang.String">
+        INSERT INTO customextensions (extension) VALUES (#{extension})
+    </insert>
 </mapper>

@@ -4,6 +4,7 @@ import org.mayone.flow.service.ExtensionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.ui.Model;
@@ -31,5 +32,10 @@ public class ThymeleafController {
     @GetMapping("/customExtensions")
     public ResponseEntity<String[]> customExtensions() {
         return ResponseEntity.ok(extensionService.selectExtensions());
+    }
+
+    @PostMapping("/insertCustomExtension")
+    public ResponseEntity<Boolean> insertCustomExtension(String extension) {
+        return ResponseEntity.ok(extensionService.insertExtension(extension));
     }
 }
