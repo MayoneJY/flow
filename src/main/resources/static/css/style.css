@@ -97,7 +97,7 @@ button {
    color: #fff;
 }
 
-#add:hover {
+#custom-add:hover {
    border: 1px solid #6449fc;
 }
 
@@ -154,7 +154,7 @@ input{
    outline: none;
 }
 
-#add {
+#custom-add {
    position: absolute;
    top: 8px;
    right: 10px;
