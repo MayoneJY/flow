@@ -5,7 +5,12 @@ const $customInputText = $("#custom-input-text");
 $(document).on("selectstart", function(e){
     if (!e.target.closest('[contenteditable="true"]')) {
         e.preventDefault();
+        $customInputText.blur();
     }
+})
+
+$customInputText.on("click", function(){
+    $(this).focus();
 })
 
 $customInputText.on("input", function (){
@@ -73,7 +78,7 @@ $("#custom-add").on("click", function(){
             $("#custom-list").append(
                 `<button class="custom-item">
                 ${text}
-                <span class="material-symbols-outlined">
+                <span class="material-symbols-outlined custom-trash-icon">
                     delete
                 </span>
             </button>`
