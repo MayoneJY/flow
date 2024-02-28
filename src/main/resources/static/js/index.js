@@ -58,3 +58,12 @@ $("#custom-add").on("click", function(){
     }
     $customInputText.focus();
 })
+
+$(".btn-check").on("click", function(){
+    if($(this).hasClass("btn-checked")){
+        $(this).removeClass("btn-checked");
+    }
+    else{
+        $(this).addClass("btn-checked");
+    }
+})
