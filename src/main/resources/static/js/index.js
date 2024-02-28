@@ -1,3 +1,5 @@
+const customItems = ["ch","ch","ch","ch","chadasdadasdasdasdasdasdasddasdasd","ch","ch","ch","ch","ch","ch","ch","ch"]
+
 $("#custom-input-text").on("input", function (){
     const $this = $(this);
     const text = $this.text();
@@ -11,4 +13,15 @@ $("#custom-input-text").on("input", function (){
         sel.addRange(range);
 
     }
+})
+
+customItems.forEach(item => {
+    $("#custom-list").append(
+        `<button class="custom-item">
+            ${item}
+            <span class="material-symbols-outlined">
+                delete
+            </span>
+        </button>`
+    );
 })
