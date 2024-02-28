@@ -187,3 +187,63 @@ input{
    background: #fff;
 }
 
+
+
+/* checkbox */
+input[type="checkbox"]{display:none;}
+.input-check {
+   display: inline-block;
+   font-size: 13px;
+   cursor: pointer;
+}
+.input-check::before {
+   vertical-align: middle;
+   content: "\e835";
+   display: inline-block;
+   margin:0 5px;
+   font-family: Material Symbols Outlined;
+   font-size: 25px;
+   color: rgb(164, 5, 192, .2);
+   -webkit-transition: transform 0.2s ease-out, color 0.2s ease;
+   -moz-transition: transform 0.2s ease-out, color 0.2s ease;
+   -ms-transition: transform 0.2s ease-out, color 0.2s ease;
+   -o-transition: transform 0.2s ease-out, color 0.2s ease;
+   transition: transform 0.2s ease-out, color 0.2s ease;
+   -webkit-transform: scale3d(0.8,0.8,1);
+   -moz-transform: scale3d(0.8,0.8,1);
+   -ms-transform: scale3d(0.8,0.8,1);
+   -o-transform: scale3d(0.8,0.8,1);
+   transform: scale3d(0.8,0.8,1);
+}
+input[type="checkbox"] + .input-check:hover::before {
+   -webkit-transform: scale3d(1,1,1);
+   -moz-transform: scale3d(1,1,1);
+   -ms-transform: scale3d(1,1,1);
+   -o-transform: scale3d(1,1,1);
+   transform: scale3d(1,1,1);
+}
+
+input[type="checkbox"] + .input-check:active::before {
+   -webkit-transform: scale3d(1.5,1.5,1);
+   -moz-transform: scale3d(1.5,1.5,1);
+   -ms-transform: scale3d(1.5,1.5,1);
+   -o-transform: scale3d(1.5,1.5,1);
+   transform: scale3d(1.5,1.5,1);
+}
+
+input[type="checkbox"]:checked + .input-check::before {
+   content:"\e834";
+   display: inline-block;
+   font-family: Material Symbols Outlined;
+   color: #a405c0;
+   -webkit-transform: scale3d(1,1,1);
+   -moz-transform: scale3d(1,1,1);
+   -ms-transform: scale3d(1,1,1);
+   -o-transform: scale3d(1,1,1);
+   transform: scale3d(1,1,1);
+}
+
+input[type="checkbox"]:checked + .input-check:hover::before {
+   content: "\e909";
+   color: #fd1e00;
+}

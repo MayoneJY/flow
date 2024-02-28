@@ -1,6 +1,12 @@
-const customItems = ["a","b","c","d","chadasdadasdasdasdasdasdasddasdasd","e","f","g","h","i","j","k","l"]
+const customItems = ["a","b","c","d","chadasdadasdasdasdasdasdasddasdasd","e","f","g","h","i","j","k","l"];
 const fixedItems = ["bat", "cmd", "com", "cpl", "exe", "scr", "js", "jsd"];
 const $customInputText = $("#custom-input-text");
+
+$(document).on("selectstart", function(e){
+    if (!e.target.closest('[contenteditable="true"]')) {
+        e.preventDefault();
+    }
+})
 
 $customInputText.on("input", function (){
     const $this = $(this);
@@ -37,9 +43,11 @@ customItems.forEach(item => {
 
 fixedItems.forEach(item => {
     $("#fixed-list").append(
-        `<button class="btn-check" id="${item}">
+        `
+        <input type="checkbox" id="${item}"/>
+        <label class="input-check" for="${item}">
             ${item}
-        </button>`
+        </label>`
     );
 
 })
