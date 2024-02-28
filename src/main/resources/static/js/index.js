@@ -1,4 +1,4 @@
-const customItems = ["ch","ch","ch","ch","chadasdadasdasdasdasdasdasddasdasd","ch","ch","ch","ch","ch","ch","ch","ch"]
+const customItems = ["a","b","c","d","chadasdadasdasdasdasdasdasddasdasd","e","f","g","h","i","j","k","l"]
 
 $("#custom-input-text").on("input", function (){
     const $this = $(this);
@@ -24,4 +24,9 @@ customItems.forEach(item => {
             </span>
         </button>`
     );
+})
+
+$(".custom-item").on("click", function(){
+    $(this).remove();
+    customItems.splice(customItems.indexOf($(this).text()), 1);
 })
