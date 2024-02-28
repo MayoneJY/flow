@@ -1,5 +1,5 @@
 const customItems = ["a","b","c","d","chadasdadasdasdasdasdasdasddasdasd","e","f","g","h","i","j","k","l"]
-
+const fixedItems = ["bat", "cmd", "com", "cpl", "exe", "scr", "js", "jsd"];
 const $customInputText = $("#custom-input-text");
 
 $customInputText.on("input", function (){
@@ -33,6 +33,15 @@ customItems.forEach(item => {
             </span>
         </button>`
     );
+})
+
+fixedItems.forEach(item => {
+    $("#fixed-list").append(
+        `<button class="btn-check" id="${item}">
+            ${item}
+        </button>`
+    );
+
 })
 
 $(".custom-item").on("click", function(){
