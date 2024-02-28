@@ -48,7 +48,7 @@ const insertCustomExtension = (text) => {
                 customItems.push(text);
                 viewCustomItemCount();
                 $("#custom-list").append(
-                    `<button class="custom-item">
+                    `<button class="custom-item" id="${text}">
                         ${text}
                         <span class="material-symbols-outlined custom-trash-icon">
                             delete
