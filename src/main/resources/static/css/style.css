@@ -268,8 +268,13 @@ input[type="checkbox"]:checked + .input-check:hover::before {
 }
 
 /* 파일 업로드 */
+.upload-buttons {
+   position: relative;
+   width: 100%;
+}
+
 #file-label {
-   display: block;
+   display: inline-block;
    margin-top: 30px;
    background-color: #5b975b;
    color: #fff;
@@ -279,6 +284,24 @@ input[type="checkbox"]:checked + .input-check:hover::before {
    border-radius: 6px;
    cursor: pointer;
 }
+
+#file-upload{
+   display: inline-block;
+   margin-top: 30px;
+   margin-left: auto;
+   background-color: #5b975b;
+   color: #fff;
+   text-align: center;
+   padding: 10px 0;
+   width: 25%;
+   border-radius: 6px;
+   cursor: pointer;
+   border: 0;
+   font-size: 13px;
+   float: right;
+   height: 40px;
+}
+
 
 input[type="file"] {
    display: none;
@@ -372,6 +395,7 @@ input[type="file"] {
 
 .upload-content {
    position: relative;
+   height: 430px;
 }
 
 .display-none {

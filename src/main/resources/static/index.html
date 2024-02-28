@@ -58,9 +58,11 @@
                         </span>
                         <p class="message">첨부할 파일을 여기에 끌어다 놓으세요</p>
                     </div>
-                    <input type="file" id="chooseFile" name="file" multiple onchange="handleFiles(this.files)"/>
-                    <label for="chooseFile" id="file-label">파일 선택</label>
-                    <input type="button" value="업로드" id="upload"/>
+                    <div class="upload-buttons">
+                        <input type="file" id="chooseFile" name="file" multiple onchange="handleFiles(this.files)"/>
+                        <label for="chooseFile" id="file-label">파일 선택</label>
+                        <input type="button" value="업로드" id="file-upload"/>
+                    </div>
                 </div>
                 <div id="files" class="files">
                 </div>
