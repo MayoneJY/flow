@@ -6,6 +6,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
     <title>Title</title>
 </head>
@@ -31,7 +32,10 @@
                 <div class="sub-title">커스텀 확장자</div>
                 <hr/>
                 <fieldset>
-                    <div id="custom-input-text" contenteditable="true" placeholder="확장자 입력"></div>
+                    <div
+                        id="custom-input-text"
+                        contenteditable="true"
+                        placeholder="확장자 입력"></div>
                     <input type="hidden" name="custom" id="custom-input-box"/>
                     <input type="button" value="+ 추가" id="add"/>
                 </fieldset>
@@ -133,5 +137,6 @@
             </div>
         </div>
     </div>
+    <script src="js/index.js"></script>
 </body>
 </html>
