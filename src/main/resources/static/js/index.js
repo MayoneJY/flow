@@ -17,6 +17,13 @@ $customInputText.on("input", function (){
     }
 })
 
+$customInputText.on("keydown", function(e){
+    if(e.key === "Enter"){
+        e.preventDefault();
+        $("#custom-add").click();
+    }
+});
+
 customItems.forEach(item => {
     $("#custom-list").append(
         `<button class="custom-item">
