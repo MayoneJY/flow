@@ -8,4 +8,6 @@ public interface ExtensionService {
     String[] selectExtensions();
 
     boolean insertExtension(String extension);
+
+    boolean deleteExtension(String extension);
 }

@@ -3,6 +3,7 @@ package org.mayone.flow.controller;
 import org.mayone.flow.service.ExtensionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,5 +38,10 @@ public class ThymeleafController {
     @PostMapping("/insertCustomExtension")
     public ResponseEntity<Boolean> insertCustomExtension(String extension) {
         return ResponseEntity.ok(extensionService.insertExtension(extension));
+    }
+
+    @DeleteMapping("/deleteCustomExtension")
+    public ResponseEntity<Boolean> deleteCustomExtension(String extension) {
+        return ResponseEntity.ok(extensionService.deleteExtension(extension));
     }
 }

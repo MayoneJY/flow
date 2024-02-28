@@ -1,4 +1,3 @@
-// const customItems = ["a","b","c","d","chadasdadasdasdasdasdasdasddasdasd","e","f","g","h","i","j","k","l"];
 const fixedItems = ["bat", "cmd", "com", "cpl", "exe", "scr", "js", "jsd"];
 let customItems = [];
 const $customInputText = $("#custom-input-text");
@@ -36,7 +35,41 @@ $customInputText.on("keydown", function(e){
     }
 });
 
+/* 커스텀 확장자를 추가하는 함수 */
+const insertCustomExtension = (text) => {
+    try {
+        $.ajax({
+            url: "/insertCustomExtension",
+            type: "POST",
+            data: {extension: text},
+            traditional: true,
+        }).then(data => {
+            if (data === true) {
+                customItems.push(text);
+                $("#custom-list").append(
+                    `<button class="custom-item">
+                        ${text}
+                        <span class="material-symbols-outlined custom-trash-icon">
+                            delete
+                        </span>
+                    </button>`
+                );
+                deleteCustomItem();
+                $customInputText.text("");
+            } else {
+                //     TODO: db에 추가하지 못했을 때의 처리
+            }
 
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+/* 커스텀 확장자를 가져오는 함수 */
 const getCustomItems = () => {
     $.ajax({
         url: "/customExtensions",
@@ -49,22 +82,47 @@ const getCustomItems = () => {
 }
 getCustomItems();
 
+/* 커스텀 확장자를 삭제하는 함수 */
+const deleteCustomItem = () => {
+    const $customItems = $(".custom-item");
+    $customItems.off("click");
+    $customItems.on("click", function(){
+        try {
+            $.ajax({
+                url: "/deleteCustomExtension",
+                type: "DELETE",
+                data: {extension: this.id},
+                traditional: true,
+            }).then(data => {
+                if (data === true) {
+                    $(this).remove();
+                    customItems.splice(customItems.indexOf(this.id), 1);
+                } else {
+                    //     TODO: db에서 삭제하지 못했을 때의 처리
+                }
+            }).catch((error) => {
+                console.error(error);
+
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    })
+}
+
+/* 커스텀 확장자를 그리는 함수 */
 const viewCustomItems = () => {
     customItems.forEach(item => {
         $("#custom-list").append(
-            `<button class="custom-item">
+            `<button class="custom-item" id="${item}">
                 ${item}
                 <span class="material-symbols-outlined custom-trash-icon">
                     delete
                 </span>
             </button>`
         );
-
-        $(".custom-item").on("click", function(){
-            $(this).remove();
-            customItems.splice(customItems.indexOf($(this).text()), 1);
-        })
     })
+    deleteCustomItem();
 }
 
 
@@ -79,7 +137,6 @@ fixedItems.forEach(item => {
 
 })
 
-
 $("#custom-add").on("click", function(){
     if(customItems.length >= 200){
         // TODO: 알림박스로 교체
@@ -93,39 +150,7 @@ $("#custom-add").on("click", function(){
             // TODO: 알림박스로 교체
         }
         else{
-            try {
-                $.ajax({
-                    url: "/insertCustomExtension",
-                    type: "POST",
-                    data: {extension: text},
-                    traditional: true,
-                }).then(data => {
-                    if (data === true) {
-                        customItems.push(text);
-                        $("#custom-list").append(
-                            `<button class="custom-item">
-                                ${text}
-                                <span class="material-symbols-outlined custom-trash-icon">
-                                    delete
-                                </span>
-                            </button>`
-                        );
-                        $(".custom-item").on("click", function () {
-                            $(this).remove();
-                            customItems.splice(customItems.indexOf($(this).text()), 1);
-                        })
-                        $customInputText.text("");
-                    } else {
-                        //     TODO: db에 추가하지 못했을 때의 처리
-                    }
-
-                }).catch((error) => {
-                    console.error(error);
-                });
-            }
-            catch (e) {
-                console.log(e);
-            }
+            insertCustomExtension(text);
         }
     }
     else{
@@ -134,13 +159,13 @@ $("#custom-add").on("click", function(){
     $customInputText.focus();
 })
 
-$(".btn-check").on("click", function(){
-    if($(this).hasClass("btn-checked")){
-        $(this).removeClass("btn-checked");
-        $(this).find("span").text("check_box_outline_blank")
-    }
-    else{
-        $(this).addClass("btn-checked");
-        $(this).find("span").text("check_box")
-    }
-})
+// $(".btn-check").on("click", function(){
+//     if($(this).hasClass("btn-checked")){
+//         $(this).removeClass("btn-checked");
+//         $(this).find("span").text("check_box_outline_blank")
+//     }
+//     else{
+//         $(this).addClass("btn-checked");
+//         $(this).find("span").text("check_box")
+//     }
+// })
