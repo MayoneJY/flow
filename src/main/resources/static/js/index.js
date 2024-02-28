@@ -29,7 +29,7 @@ $customInputText.on("input", function (){
 })
 
 $customInputText.on("keydown", function(e){
-    if(e.key === "Enter"){
+    if(e.key === "Enter" || e.key === "Tab"){
         e.preventDefault();
         $("#custom-add").click();
     }

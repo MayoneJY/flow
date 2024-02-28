@@ -248,3 +248,20 @@ input[type="checkbox"]:checked + .input-check:hover::before {
    content: "\e909";
    color: rgba(253, 30, 0, 0.5);
 }
+
+.guide-box {
+   height: 44px;
+   border: 1px solid #ffa600;
+   border-radius: 4px;
+   padding: 11px 20px;
+   margin-top: 5px;
+   color: #ffa600;
+   display: flex;
+   align-items: center;
+   background: rgba(255, 166, 0, 0.1);
+}
+
+.custom-guide-icon{
+   margin-right: 11px;
+   font-size: 20px;
+}
