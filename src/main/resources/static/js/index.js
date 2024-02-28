@@ -56,4 +56,5 @@ $("#custom-add").on("click", function(){
     else{
         // TODO: 아무것도 입력하지 않았을 때의 처리
     }
+    $customInputText.focus();
 })
