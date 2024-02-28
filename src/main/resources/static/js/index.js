@@ -36,17 +36,22 @@ $(".custom-item").on("click", function(){
 $("#custom-add").on("click", function(){
     const text = $customInputText.text();
     if(text.length > 0){
-        // TODO: 중복된 아이템이 있는지 확인
-        $("#custom-list").append(
-            `<button class="custom-item">
+        if(customItems.includes(text)){
+            alert("이미 존재하는 확장자입니다.")
+            // TODO: 알림박스로 교체
+        }
+        else{
+            $("#custom-list").append(
+                `<button class="custom-item">
                 ${text}
                 <span class="material-symbols-outlined">
                     delete
                 </span>
             </button>`
-        );
-        customItems.push(text);
-        $("#custom-input-text").text("");
+            );
+            customItems.push(text);
+            $("#custom-input-text").text("");
+        }
     }
     else{
         // TODO: 아무것도 입력하지 않았을 때의 처리
