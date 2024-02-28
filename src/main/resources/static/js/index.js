@@ -41,6 +41,11 @@ $(".custom-item").on("click", function(){
 })
 
 $("#custom-add").on("click", function(){
+    if(customItems.length >= 200){
+        // TODO: 알림박스로 교체
+        alert("최대 200개까지 추가할 수 있습니다.")
+        return;
+    }
     const text = $customInputText.text();
     if(text.length > 0){
         if(customItems.includes(text)){
