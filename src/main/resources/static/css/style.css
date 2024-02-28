@@ -275,30 +275,43 @@ input[type="checkbox"]:checked + .input-check:hover::before {
 #file-label {
    display: inline-block;
    margin-top: 30px;
-   background-color: #5b975b;
-   color: #fff;
+   background-color: #fff;
+   color: #914c9c;
    text-align: center;
    padding: 10px 0;
    width: 65%;
    border-radius: 6px;
    cursor: pointer;
+   border: 1px solid #914c9c;
+   transition: .3s;
+}
+
+#file-label:hover {
+   background-color: #914c9c;
+   color: #fff;
 }
 
 #file-upload{
    display: inline-block;
    margin-top: 30px;
    margin-left: auto;
-   background-color: #5b975b;
-   color: #fff;
+   background-color: #fff;
+   color: #914c9c;
    text-align: center;
    padding: 10px 0;
    width: 25%;
    border-radius: 6px;
    cursor: pointer;
-   border: 0;
    font-size: 13px;
    float: right;
    height: 40px;
+   border: 1px solid #914c9c;
+   transition: .3s;
+}
+
+#file-upload:hover {
+   background-color: #914c9c;
+   color: #fff;
 }
 
 
