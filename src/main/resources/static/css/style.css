@@ -41,6 +41,7 @@ body {
    border: 1px solid #ddd;
    padding: 10px;
    margin-top: 10px;
+   min-height: 100px;
 }
 
 #list-count {
@@ -203,7 +204,7 @@ input[type="checkbox"]{display:none;}
    margin:0 5px;
    font-family: Material Symbols Outlined;
    font-size: 25px;
-   color: rgb(164, 5, 192, .2);
+   color: rgba(253, 30, 0, 0.2);
    -webkit-transition: transform 0.2s ease-out, color 0.2s ease;
    -moz-transition: transform 0.2s ease-out, color 0.2s ease;
    -ms-transition: transform 0.2s ease-out, color 0.2s ease;
@@ -216,6 +217,7 @@ input[type="checkbox"]{display:none;}
    transform: scale3d(0.8,0.8,1);
 }
 input[type="checkbox"] + .input-check:hover::before {
+   content: "\e909";
    -webkit-transform: scale3d(1,1,1);
    -moz-transform: scale3d(1,1,1);
    -ms-transform: scale3d(1,1,1);
@@ -232,10 +234,9 @@ input[type="checkbox"] + .input-check:active::before {
 }
 
 input[type="checkbox"]:checked + .input-check::before {
-   content:"\e834";
-   display: inline-block;
+   content: "\e909";
+   color: #fd1e00;
    font-family: Material Symbols Outlined;
-   color: #a405c0;
    -webkit-transform: scale3d(1,1,1);
    -moz-transform: scale3d(1,1,1);
    -ms-transform: scale3d(1,1,1);
@@ -245,5 +246,5 @@ input[type="checkbox"]:checked + .input-check::before {
 
 input[type="checkbox"]:checked + .input-check:hover::before {
    content: "\e909";
-   color: #fd1e00;
+   color: rgba(253, 30, 0, 0.5);
 }

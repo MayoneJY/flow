@@ -1,5 +1,6 @@
-const customItems = ["a","b","c","d","chadasdadasdasdasdasdasdasddasdasd","e","f","g","h","i","j","k","l"];
+// const customItems = ["a","b","c","d","chadasdadasdasdasdasdasdasddasdasd","e","f","g","h","i","j","k","l"];
 const fixedItems = ["bat", "cmd", "com", "cpl", "exe", "scr", "js", "jsd"];
+let customItems = [];
 const $customInputText = $("#custom-input-text");
 
 $(document).on("selectstart", function(e){
@@ -35,16 +36,37 @@ $customInputText.on("keydown", function(e){
     }
 });
 
-customItems.forEach(item => {
-    $("#custom-list").append(
-        `<button class="custom-item">
-            ${item}
-            <span class="material-symbols-outlined custom-trash-icon">
-                delete
-            </span>
-        </button>`
-    );
-})
+
+const getCustomItems = () => {
+    $.ajax({
+        url: "/customExtensions",
+        type: "GET",
+        traditional: true,
+    }).then(data => {
+        customItems = data;
+        viewCustomItems();
+    })
+}
+getCustomItems();
+
+const viewCustomItems = () => {
+    customItems.forEach(item => {
+        $("#custom-list").append(
+            `<button class="custom-item">
+                ${item}
+                <span class="material-symbols-outlined custom-trash-icon">
+                    delete
+                </span>
+            </button>`
+        );
+
+        $(".custom-item").on("click", function(){
+            $(this).remove();
+            customItems.splice(customItems.indexOf($(this).text()), 1);
+        })
+    })
+}
+
 
 fixedItems.forEach(item => {
     $("#fixed-list").append(
@@ -57,10 +79,6 @@ fixedItems.forEach(item => {
 
 })
 
-$(".custom-item").on("click", function(){
-    $(this).remove();
-    customItems.splice(customItems.indexOf($(this).text()), 1);
-})
 
 $("#custom-add").on("click", function(){
     if(customItems.length >= 200){
