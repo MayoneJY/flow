@@ -204,7 +204,7 @@ input[type="checkbox"]{display:none;}
    margin:0 5px;
    font-family: Material Symbols Outlined;
    font-size: 25px;
-   color: rgba(253, 30, 0, 0.2);
+   color: rgba(164, 5, 192, 0.20);
    -webkit-transition: transform 0.2s ease-out, color 0.2s ease;
    -moz-transition: transform 0.2s ease-out, color 0.2s ease;
    -ms-transition: transform 0.2s ease-out, color 0.2s ease;
@@ -217,7 +217,7 @@ input[type="checkbox"]{display:none;}
    transform: scale3d(0.8,0.8,1);
 }
 input[type="checkbox"] + .input-check:hover::before {
-   content: "\e909";
+   content:"\e834";
    -webkit-transform: scale3d(1,1,1);
    -moz-transform: scale3d(1,1,1);
    -ms-transform: scale3d(1,1,1);
@@ -234,8 +234,8 @@ input[type="checkbox"] + .input-check:active::before {
 }
 
 input[type="checkbox"]:checked + .input-check::before {
-   content: "\e909";
-   color: #fd1e00;
+   content:"\e834";
+   color: #a405c0;
    font-family: Material Symbols Outlined;
    -webkit-transform: scale3d(1,1,1);
    -moz-transform: scale3d(1,1,1);
