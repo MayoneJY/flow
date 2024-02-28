@@ -28,13 +28,14 @@ body {
    margin: 0 auto;
 }
 
-#main-container {
+.main-container {
    width: 100%;
    background: #fff;
    padding: 20px;
    border: 1px solid #ccc;
    border-radius: 10px;
-   box-shadow: 0 0 15px rgba(0, 0, 0, 0.04)
+   box-shadow: 0 0 15px rgba(0, 0, 0, 0.04);
+   margin-bottom: 20px;
 }
 
 #custom-list {
@@ -264,4 +265,115 @@ input[type="checkbox"]:checked + .input-check:hover::before {
 .custom-guide-icon{
    margin-right: 11px;
    font-size: 20px;
+}
+
+/* 파일 업로드 */
+#file-label {
+   display: block;
+   margin-top: 30px;
+   background-color: #5b975b;
+   color: #fff;
+   text-align: center;
+   padding: 10px 0;
+   width: 65%;
+   border-radius: 6px;
+   cursor: pointer;
+}
+
+input[type="file"] {
+   display: none;
+}
+
+.upload-box {
+   width: 100%;
+   box-sizing: border-box;
+   margin-right: 30px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   position: absolute;
+}
+.upload-box .drag-file {
+   width: 100%;
+   height: 360px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   background: rgba(238, 238, 238, 0.7);
+   border: 3px dashed #aaa;
+}
+.upload-box .drag-file.highlight {
+   border: 3px dashed #a405c0;
+}
+.upload-box .drag-file .upload-file-icon{
+   width: 40px;
+   font-size: 40px;
+   color: #555;
+}
+.message {
+   color: #555;
+}
+.upload-box .drag-file .message {
+   margin-bottom: 0;
+}
+
+.files {
+   width: 100%;
+   box-sizing: border-box;
+   overflow: auto;
+   height: 360px;
+}
+.files .file {
+   display: flex;
+   padding: 20px 20px;
+   border-bottom: 1px solid #dbdbdb;
+}
+.files .file:last-child {
+   margin-bottom: 0;
+   border-bottom: none;
+}
+.files .file .thumbnail {
+   display: flex;
+   flex: none;
+   width: 50px;
+   margin-right: 20px;
+   align-items: center;
+}
+.files .file .thumbnail .image {
+   width: 100%;
+}
+.files .file .thumbnail .uploaded-file-icon {
+   width: 60px;
+   font-size: 60px;
+   color: #555;
+}
+.files .file .details {
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+.files .file .details .header {
+   display: flex;
+   height: 100%;
+    align-items: center;
+}
+.files .file .details .header .name {
+   width: 300px;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   overflow: hidden;
+}
+.files .file .details .header .size {
+   margin-left: auto;
+}
+
+.upload-content {
+   position: relative;
+}
+
+.display-none {
+   opacity: 0;
 }

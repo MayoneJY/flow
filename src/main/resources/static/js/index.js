@@ -176,3 +176,86 @@ $("#custom-add").on("click", function(){
 //         $(this).find("span").text("check_box")
 //     }
 // })
+
+// 파일 업로드
+function bytesToMegabytes(bytes) {
+    const megabytes = bytes / 1024 / 1024;
+    return Math.round(megabytes * 10) / 10;
+}
+
+const $dropArea = $("#drop-file");
+const $fileList = $("#files");
+const uploadFiles = [];
+
+function preventDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+function highlight(e) {
+    preventDefaults(e);
+    $dropArea.addClass("highlight");
+    if($dropArea.hasClass("display-none")){
+        $dropArea.removeClass("display-none");
+    }
+}
+
+function unHighlight(e) {
+    preventDefaults(e);
+    $dropArea.removeClass("highlight");
+    if(uploadFiles.length !== 0){
+        $dropArea.addClass("display-none");
+    }
+}
+
+function handleDrop(e) {
+    // TODO: 중복된 파일이 있는지 확인
+    unHighlight(e);
+    let dt = e.originalEvent.dataTransfer;
+    let files = dt.files;
+    $dropArea.addClass("display-none");
+    handleFiles(files);
+
+    animateFileList();
+}
+
+function animateFileList() {
+    if ($fileList) {
+        $fileList.animate({ scrollTop: $fileList.prop("scrollHeight")}, 500);
+    }
+
+}
+
+function handleFiles(files) {
+    files = [...files];
+    uploadFiles.push(...files);
+    files.forEach(previewFile);
+}
+
+function previewFile(file) {
+    renderFile(file);
+    animateFileList();
+}
+
+function renderFile(file) {
+    $fileList.append(
+        `<div class="file">
+            <div class="thumbnail">
+                <span class="material-symbols-outlined uploaded-file-icon">
+                    description
+                </span>
+            </div>
+            <div class="details">
+                <header class="header">
+                    <span class="name">${file.name}</span>
+                    <span class="size">${bytesToMegabytes(file.size)} mb</span>
+                </header>
+            </div>
+        </div>`
+    );
+}
+
+$dropArea.on("dragenter", highlight);
+$dropArea.on("dragover", highlight);
+$dropArea.on("dragleave", unHighlight);
+$dropArea.on("drop", handleDrop);

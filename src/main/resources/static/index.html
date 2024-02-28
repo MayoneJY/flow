@@ -14,7 +14,7 @@
 <body>
     <div id="main">
         <img src="img/flow-logo.svg" alt="logo" id="logo"/>
-        <div id="main-container">
+        <div class="main-container">
             <div id="fixed-box">
                 <div class="sub-title">고정 확장자</div>
                 <hr/>
@@ -44,6 +44,25 @@
                     <div id="list-count">
                         <span>0</span>/200
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-container">
+            <div class="sub-title">파일 업로드</div>
+            <hr/>
+            <div class="upload-content">
+                <div class="upload-box">
+                    <div id="drop-file" class="drag-file">
+                        <span class="material-symbols-outlined upload-file-icon">
+                            upload_file
+                        </span>
+                        <p class="message">첨부할 파일을 여기에 끌어다 놓으세요</p>
+                    </div>
+                    <input type="file" id="chooseFile" name="file" multiple onchange="handleFiles(this.files)"/>
+                    <label for="chooseFile" id="file-label">파일 선택</label>
+                    <input type="button" value="업로드" id="upload"/>
+                </div>
+                <div id="files" class="files">
                 </div>
             </div>
         </div>
