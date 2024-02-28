@@ -28,7 +28,7 @@ customItems.forEach(item => {
     $("#custom-list").append(
         `<button class="custom-item">
             ${item}
-            <span class="material-symbols-outlined">
+            <span class="material-symbols-outlined custom-trash-icon">
                 delete
             </span>
         </button>`
@@ -74,8 +74,10 @@ $("#custom-add").on("click", function(){
 $(".btn-check").on("click", function(){
     if($(this).hasClass("btn-checked")){
         $(this).removeClass("btn-checked");
+        $(this).find("span").text("check_box_outline_blank")
     }
     else{
         $(this).addClass("btn-checked");
+        $(this).find("span").text("check_box")
     }
 })
