@@ -27,10 +27,11 @@
                 <fieldset>
                     <div
                         id="custom-input-text"
+                        class="content-border"
                         contenteditable="true"
                         placeholder="차단할 확장자 추가 (Enter 또는 Tab) / 최대 20자"></div>
                     <input type="hidden" name="custom" id="custom-input-box"/>
-                    <input type="button" value="+ 추가" id="custom-add"/>
+                    <input type="button" value="+ 추가" id="custom-add" class="content-border"/>
                 </fieldset>
 <!--                <div class="guide-box">-->
 <!--                    <span class="material-symbols-outlined custom-guide-icon">-->
@@ -40,7 +41,7 @@
 <!--                        확장자는 최대 20자까지 입력 가능합니다.-->
 <!--                    </span>-->
 <!--                </div>-->
-                <div id="custom-list">
+                <div id="custom-list" class="content-border">
                     <div id="list-count">
                         <span>0</span>/200
                     </div>
@@ -58,13 +59,13 @@
                         </span>
                         <p class="message">첨부할 파일을 여기에 끌어다 놓으세요</p>
                     </div>
-                    <div class="upload-buttons">
-                        <input type="file" id="chooseFile" name="file" multiple onchange="handleFiles(this.files)"/>
-                        <label for="chooseFile" id="file-label">파일 선택</label>
-                        <input type="button" value="업로드" id="file-upload"/>
-                    </div>
                 </div>
-                <div id="files" class="files">
+                <div id="files" class="files content-border">
+                </div>
+                <div class="upload-buttons">
+                    <input type="file" id="chooseFile" name="file" multiple onchange="handleFiles(this.files)"/>
+                    <label for="chooseFile" id="file-label">파일 선택</label>
+                    <input type="button" value="업로드" id="file-upload"/>
                 </div>
             </div>
         </div>

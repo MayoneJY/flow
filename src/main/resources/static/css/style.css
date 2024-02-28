@@ -39,7 +39,6 @@ body {
 }
 
 #custom-list {
-   border: 1px solid #ddd;
    padding: 10px;
    margin-top: 10px;
    min-height: 100px;
@@ -145,8 +144,6 @@ hr {
 #custom-input-text[contenteditable] {
    padding: 11px 75px 11px 20px;
    min-height: 44px;
-   border: 1px solid #ddd;
-   border-radius: 4px;
    box-sizing: border-box;
    width: 100%;
    color: #555;
@@ -182,13 +179,15 @@ input{
    top: 8px;
    right: 10px;
    height: 28px;
-   border: 1px solid #ddd;
-   border-radius: 4px;
    cursor: pointer;
    text-align: center;
    background: #fff;
 }
 
+.content-border {
+   border: 1px solid #ddd;
+   border-radius: 4px;
+}
 
 
 /* checkbox */
@@ -347,6 +346,8 @@ input[type="file"] {
    box-sizing: border-box;
    overflow: auto;
    height: 360px;
+   margin-top: 10px
+
 }
 .files .file {
    display: flex;
@@ -399,5 +400,6 @@ input[type="file"] {
 }
 
 .display-none {
-   opacity: 0;
+   /*opacity: 0;*/
+    display: none !important;
 }

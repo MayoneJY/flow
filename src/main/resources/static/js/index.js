@@ -229,6 +229,7 @@ function animateFileList() {
 function handleFiles(files) {
     files = [...files];
     uploadFiles.push(...files);
+    $dropArea.addClass("display-none");
     files.forEach(previewFile);
 }
 
