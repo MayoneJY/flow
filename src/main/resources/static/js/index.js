@@ -46,6 +46,7 @@ const insertCustomExtension = (text) => {
         }).then(data => {
             if (data === true) {
                 customItems.push(text);
+                viewCustomItemCount();
                 $("#custom-list").append(
                     `<button class="custom-item">
                         ${text}
@@ -97,6 +98,7 @@ const deleteCustomItem = () => {
                 if (data === true) {
                     $(this).remove();
                     customItems.splice(customItems.indexOf(this.id), 1);
+                    viewCustomItemCount();
                 } else {
                     //     TODO: db에서 삭제하지 못했을 때의 처리
                 }
@@ -112,6 +114,7 @@ const deleteCustomItem = () => {
 
 /* 커스텀 확장자를 그리는 함수 */
 const viewCustomItems = () => {
+    viewCustomItemCount();
     customItems.forEach(item => {
         $("#custom-list").append(
             `<button class="custom-item" id="${item}">
@@ -125,6 +128,10 @@ const viewCustomItems = () => {
     deleteCustomItem();
 }
 
+/* 커스텀 확장자의 개수를 보여주는 함수 */
+const viewCustomItemCount = () => {
+    $("#list-count").find("span").text(customItems.length);
+}
 
 fixedItems.forEach(item => {
     $("#fixed-list").append(
