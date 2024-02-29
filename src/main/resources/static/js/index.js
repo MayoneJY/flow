@@ -317,6 +317,7 @@ function getFileInformation(){
         url: "/fileInformation",
         type: "GET",
         success: function (data) {
+            console.log(data);
             if(data.length === 0){
                 $fileUploaded.append(guideBox(noFileGuide));
             }

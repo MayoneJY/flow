@@ -1,5 +1,6 @@
 package org.mayone.flow.controller;
 
+import org.mayone.flow.model.FileDTO;
 import org.mayone.flow.service.ExtensionService;
 import org.mayone.flow.service.FileService;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.List;
+
 
 @Controller
 public class MainController {
@@ -54,6 +55,11 @@ public class MainController {
     public ResponseEntity<Boolean> uploadFile(@RequestParam("file") MultipartFile[] files) {
 
         return ResponseEntity.ok(fileService.uploadFile(files));
+    }
+
+    @GetMapping("/fileInformation")
+    public ResponseEntity<List<FileDTO>> fileInformation() {
+        return ResponseEntity.ok(fileService.fileInformation());
     }
 
 }

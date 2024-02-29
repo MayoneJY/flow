@@ -48,4 +48,10 @@ public class FileServiceImpl implements FileService{
         FileMapper fm = sqlSession.getMapper(FileMapper.class);
         return fm.insertFile(fileDTOList);
     }
+
+    @Transactional(readOnly = true)
+    public List<FileDTO> fileInformation() {
+        FileMapper fm = sqlSession.getMapper(FileMapper.class);
+        return fm.selectFiles();
+    }
 }
