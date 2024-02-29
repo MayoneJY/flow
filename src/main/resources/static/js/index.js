@@ -185,7 +185,7 @@ function bytesToMegabytes(bytes) {
 
 const $dropArea = $("#drop-file");
 const $fileList = $("#files");
-const uploadFiles = [];
+const uploadFiles = new FormData();
 
 function preventDefaults(e) {
     e.preventDefault();
@@ -211,8 +211,8 @@ function unHighlight(e) {
 function handleDrop(e) {
     // TODO: 중복된 파일이 있는지 확인
     unHighlight(e);
-    let dt = e.originalEvent.dataTransfer;
-    let files = dt.files;
+    const dt = e.originalEvent.dataTransfer;
+    const files = dt.files;
     $dropArea.addClass("display-none");
     handleFiles(files);
 
@@ -227,8 +227,10 @@ function animateFileList() {
 }
 
 function handleFiles(files) {
+    for(let i = 0; i < files.length; i++){
+        uploadFiles.append("file", files[i]);
+    }
     files = [...files];
-    uploadFiles.push(...files);
     $dropArea.addClass("display-none");
     files.forEach(previewFile);
 }
@@ -255,6 +257,32 @@ function renderFile(file) {
         </div>`
     );
 }
+
+function uploadFile() {
+    if(uploadFiles.length === 0){
+        return;
+    }
+    $.ajax({
+        url: "/uploadFile",
+        type: "POST",
+        data: uploadFiles,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            alert("파일 업로드에 성공했습니다.")
+            console.log(data);
+        },
+        error: function (error) {
+            console.error(error);
+        },
+        complete: function () {
+            uploadFiles.delete("file");
+            $fileList.empty();
+        }
+    })
+}
+
+$("#file-upload").on("click", uploadFile);
 
 $dropArea.on("dragenter", highlight);
 $fileList.on("dragenter", highlight);
