@@ -310,7 +310,6 @@ function guideBox(guideMessage){
         </div>
     `);
 }
-
 const $fileUploaded = $("#file-uploaded");
 function getFileInformation(){
     $.ajax({
@@ -322,25 +321,25 @@ function getFileInformation(){
                 $fileUploaded.append(guideBox(noFileGuide));
             }
             else{
+                $uploadedFiles = $(`<div id="uploaded-files" class="content-border"></div>`)
                 data.forEach(file => {
-                    $fileUploaded.append(
-                        `
-                        <div id="uploaded-files" class="content-border">
-                            <div class="file">
-                                <div class="thumbnail">
-                                    <span class="material-symbols-outlined uploaded-file-icon">
-                                        description
-                                    </span>
-                                </div>
-                                <div class="details">
-                                    <header class="header">
-                                        <span class="name">${file.originalName}</span>
-                                        <span class="size">${bytesToMegabytes(file.size)} mb</span>
-                                    </header>
-                                </div>
+
+                    $uploadedFiles.append(
+                        `<div class="file">
+                            <div class="thumbnail">
+                                <span class="material-symbols-outlined uploaded-file-icon">
+                                    description
+                                </span>
+                            </div>
+                            <div class="details">
+                                <header class="header">
+                                    <span class="name">${file.originalName}</span>
+                                    <span class="size">${bytesToMegabytes(file.size)} mb</span>
+                                </header>
                             </div>
                         </div>`
                     );
+                    $fileUploaded.append($uploadedFiles)
                 })
             }
         },
