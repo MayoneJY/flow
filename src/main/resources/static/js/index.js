@@ -273,11 +273,13 @@ function uploadFile() {
             console.log(data);
         },
         error: function (error) {
+            alert("파일 업로드에 실패했습니다.")
             console.error(error);
         },
         complete: function () {
             uploadFiles.delete("file");
             $fileList.empty();
+            $dropArea.removeClass("display-none");
         }
     })
 }

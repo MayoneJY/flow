@@ -6,6 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @Controller
 public class MainController {
@@ -41,4 +46,23 @@ public class MainController {
     public ResponseEntity<Boolean> deleteCustomExtension(String extension) {
         return ResponseEntity.ok(extensionService.deleteExtension(extension));
     }
+
+    @PostMapping("/uploadFile")
+    public ResponseEntity<Boolean> uploadFile(@RequestParam("file") MultipartFile[] files) {
+        String uploadPath = "/Users/jeongyeon/job/flowFiles";
+        System.out.println("files.length = " + files.length);
+        for (MultipartFile file : files) {
+            String fileName = file.getOriginalFilename();
+
+            try{
+                file.transferTo(new File(uploadPath + "/" + fileName));
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.ok(false);
+            }
+
+        }
+        return ResponseEntity.ok(true);
+    }
+
 }
