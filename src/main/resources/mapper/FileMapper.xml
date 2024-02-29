@@ -11,4 +11,8 @@
     <select id="selectFiles" resultType="org.mayone.flow.model.FileDTO">
         SELECT * FROM files
     </select>
+
+    <select id="selectFile" resultType="org.mayone.flow.model.FileDTO">
+        SELECT * FROM files WHERE idx = #{idx}
+    </select>
 </mapper>

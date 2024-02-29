@@ -11,4 +11,6 @@ public interface FileService {
     boolean uploadFile(MultipartFile[] files);
 
     List<FileDTO> fileInformation();
+
+    FileDTO selectFile(int idx);
 }

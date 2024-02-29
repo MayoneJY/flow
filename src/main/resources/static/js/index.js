@@ -324,7 +324,7 @@ function getFileInformation(){
                 $uploadedFiles = $(`<div id="uploaded-files" class="content-border"></div>`)
                 data.forEach(file => {
 
-                    $uploadedFiles.append(
+                    $file = $(
                         `<div class="file">
                             <div class="thumbnail">
                                 <span class="material-symbols-outlined uploaded-file-icon">
@@ -336,12 +336,16 @@ function getFileInformation(){
                                     <span class="name">${file.originalName}</span>
                                     <div class="file-info">
                                         <span class="size">${bytesToMegabytes(file.size)} mb</span>
-                                        <span class="date">${file.timeStamp.split(' ')[0]}</span>
+                                        <span class="date">${file.createdDate.split('T')[0]}</span>
                                     </div>
                                 </header>
                             </div>
                         </div>`
                     );
+                    $file.on("click", function(){
+                        window.open(`/downloadFile/${file.idx}`, "_blank");
+                    });
+                    $uploadedFiles.append($file);
                     $fileUploaded.append($uploadedFiles)
                 })
             }

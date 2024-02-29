@@ -1,48 +1,29 @@
 package org.mayone.flow.service;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.mayone.flow.mapper.FileMapper;
 import org.mayone.flow.model.FileDTO;
+import org.mayone.flow.util.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class FileServiceImpl implements FileService{
     private final SqlSession sqlSession;
-
-    public FileServiceImpl(SqlSession sqlSession) {
-        this.sqlSession = sqlSession;
-    }
+    private final FileUtils fileUtils;
 
     @Transactional
     public boolean uploadFile(MultipartFile[] files) {
-        String uploadPath = "/Users/jeongyeon/job/flowFiles";
         List<FileDTO> fileDTOList = new ArrayList<>();
         for (MultipartFile file : files) {
-            String originalName = file.getOriginalFilename();
-            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-            String extension = StringUtils.getFilenameExtension(originalName);
-            FileDTO fileDTO = FileDTO.builder()
-                    .originalName(originalName)
-                    .saveName(uuid + "." + extension)
-                    .size(file.getSize())
-                    .build();
 
-            try{
-                file.transferTo(new File(uploadPath + "/" + uuid + "." + extension));
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
-
-            fileDTOList.add(fileDTO);
+            fileDTOList.add(fileUtils.uploadFile(file));
         }
 
         FileMapper fm = sqlSession.getMapper(FileMapper.class);
@@ -53,5 +34,11 @@ public class FileServiceImpl implements FileService{
     public List<FileDTO> fileInformation() {
         FileMapper fm = sqlSession.getMapper(FileMapper.class);
         return fm.selectFiles();
+    }
+
+    @Transactional(readOnly = true)
+    public FileDTO selectFile(int idx) {
+        FileMapper fm = sqlSession.getMapper(FileMapper.class);
+        return fm.selectFile(idx);
     }
 }

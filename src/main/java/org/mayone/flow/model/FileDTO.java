@@ -3,6 +3,8 @@ package org.mayone.flow.model;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class FileDTO {
@@ -10,6 +12,6 @@ public class FileDTO {
     private String originalName;
     private String saveName;
     private Long size;
-    private String timeStamp;
+    private LocalDateTime createdDate;
 }
 

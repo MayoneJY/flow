@@ -8,4 +8,6 @@ public interface FileMapper {
     boolean insertFile(List<FileDTO> fileDTOList);
 
     List<FileDTO> selectFiles();
+
+    FileDTO selectFile(int idx);
 }

@@ -1,29 +1,32 @@
 package org.mayone.flow.controller;
 
+
+import lombok.RequiredArgsConstructor;
 import org.mayone.flow.model.FileDTO;
 import org.mayone.flow.service.ExtensionService;
 import org.mayone.flow.service.FileService;
+import org.mayone.flow.util.FileUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 
 @Controller
+@RequiredArgsConstructor
 public class MainController {
 
     private final ExtensionService extensionService;
     private final FileService fileService;
+    private final FileUtils fileUtils;
 
-    public MainController(ExtensionService extensionService, FileService fileService) {
-        this.extensionService = extensionService;
-        this.fileService = fileService;
-    }
 
 //    @RequestMapping("/")
 //    public String index(Model model) {
@@ -60,6 +63,17 @@ public class MainController {
     @GetMapping("/fileInformation")
     public ResponseEntity<List<FileDTO>> fileInformation() {
         return ResponseEntity.ok(fileService.fileInformation());
+    }
+
+    @GetMapping("/downloadFile/{idx}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable int idx) {
+        FileDTO fileDTO = fileService.selectFile(idx);
+        Resource resource = fileUtils.readFileAsResource(fileDTO);
+        String originalName = URLEncoder.encode(fileDTO.getOriginalName(), StandardCharsets.UTF_8);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header("Content-Disposition", "attachment; filename=\"" + originalName + "\"")
+                .body(resource);
     }
 
 }
