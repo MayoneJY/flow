@@ -1,7 +1,9 @@
-const fixedItems = ["bat", "cmd", "com", "cpl", "exe", "scr", "js", "jsd"];
+let fixedItems = [];
+const selectedFixedItems = [];
 let customItems = [];
 const $customInputText = $("#custom-input-text");
 
+// 드래그 방지
 $(document).on("selectstart", function(e){
     if (!e.target.closest('[contenteditable="true"]')) {
         e.preventDefault();
@@ -9,10 +11,15 @@ $(document).on("selectstart", function(e){
     }
 })
 
+// 커스텀 확장자 입력창 이벤트
 $customInputText.on("click", function(){
     $(this).focus();
 })
 
+/*
+ * 커스텀 확장자 입력창 이벤트
+ * 글자수 제한
+ */
 $customInputText.on("input", function (){
     const $this = $(this);
     const text = $this.text();
@@ -28,6 +35,10 @@ $customInputText.on("input", function (){
     }
 })
 
+/*
+ * 커스텀 확장자 입력창 이벤트
+ * 엔터, 탭키 입력시 추가
+ */
 $customInputText.on("keydown", function(e){
     if(e.key === "Enter" || e.key === "Tab"){
         e.preventDefault();
@@ -133,17 +144,45 @@ const viewCustomItemCount = () => {
     $("#list-count").find("span").text(customItems.length);
 }
 
-fixedItems.forEach(item => {
-    $("#fixed-list").append(
-        `
-        <input type="checkbox" id="${item}"/>
-        <label class="input-check" for="${item}">
-            ${item}
-        </label>`
-    );
+/* 고정 확장자를 가져오는 함수 */
+const getFixedItems = () => {
+    $.ajax({
+        url: "/fixedExtensions",
+        type: "GET",
+        traditional: true,
+    }).then(data => {
+        fixedItems = data;
+        viewFixedItems();
+    })
 
-})
+}
+getFixedItems();
 
+/* 고정 확장자를 그리는 함수 */
+const viewFixedItems = () => {
+    fixedItems.forEach(item => {
+        $("#fixed-list").append(
+            `
+            <input type="checkbox" id="${item}"/>
+            <label class="input-check" for="${item}">
+                ${item}
+            </label>`
+        );
+
+    })
+}
+
+/* 고정 확장자를 선택하는 함수 */
+$("#fixed-list").on("change", "input", function(){
+    if(this.checked){
+        selectedFixedItems.push(this.id);
+    }
+    else{
+        selectedFixedItems.splice(selectedFixedItems.indexOf(this.id), 1);
+    }
+});
+
+// 커스텀 확장자를 추가하는 함수
 $("#custom-add").on("click", function(){
     if(customItems.length >= 200){
         // TODO: 알림박스로 교체
