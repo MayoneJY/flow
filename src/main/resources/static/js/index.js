@@ -257,6 +257,8 @@ function renderFile(file) {
 }
 
 $dropArea.on("dragenter", highlight);
+$fileList.on("dragenter", highlight);
 $dropArea.on("dragover", highlight);
+$fileList.on("dragover", highlight);
 $dropArea.on("dragleave", unHighlight);
 $dropArea.on("drop", handleDrop);
