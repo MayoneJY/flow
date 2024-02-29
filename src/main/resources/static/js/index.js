@@ -216,11 +216,32 @@ const viewFixedItems = () => {
 
 /* 고정 확장자를 선택하는 함수 */
 $("#fixed-list").on("change", "input", function(){
-    if(this.checked){
-        selectedFixedItems.push(this.id);
+    try {
+        $.ajax({
+            url: "/updateFixedExtension",
+            type: "PUT",
+            data: {extension: this.id, status: this.checked},
+            traditional: true,
+            success: function (data) {
+                if (data === true) {
+                    fixedItems.find(item => item.extension === this.id).status = true;
+
+                } else {
+                    alert("고정 확장자를 변경하지 못했습니다.")
+                    this.checked = !this.checked;
+                }
+            },
+            error: function (error) {
+                console.error(error);
+                alert("고정 확장자를 변경하지 못했습니다.")
+                this.checked = !this.checked;
+            }
+        })
     }
-    else{
-        selectedFixedItems.splice(selectedFixedItems.indexOf(this.id), 1);
+    catch (e) {
+        console.log(e);
+        alert("고정 확장자를 변경하지 못했습니다.")
+        this.checked = !this.checked;
     }
 });
 
