@@ -15,4 +15,6 @@ public interface ExtensionService {
     boolean deleteExtension(String extension);
 
     List<FixedExtensionDTO> selectFixedExtensions();
+
+    boolean updateFixedExtension(FixedExtensionDTO fixedExtensionDTO);
 }

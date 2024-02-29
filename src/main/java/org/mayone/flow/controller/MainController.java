@@ -45,6 +45,11 @@ public class MainController {
         return ResponseEntity.ok(extensionService.selectExtensions());
     }
 
+    @PutMapping("/updateFixedExtension")
+    public ResponseEntity<Boolean> updateFixedExtension(@RequestBody FixedExtensionDTO fixedExtensionDTO) {
+        return ResponseEntity.ok(extensionService.updateFixedExtension(fixedExtensionDTO));
+    }
+
     @GetMapping("/fixedExtensions")
     public ResponseEntity<List<FixedExtensionDTO>> fixedExtensions() {
         return ResponseEntity.ok(extensionService.selectFixedExtensions());

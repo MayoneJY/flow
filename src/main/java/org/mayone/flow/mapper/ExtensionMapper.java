@@ -13,4 +13,6 @@ public interface ExtensionMapper {
     boolean deleteCustomExtension(String extension);
 
     List<FixedExtensionDTO> selectFixedExtensions();
+
+    boolean updateFixedExtension(FixedExtensionDTO fixedExtensionDTO);
 }

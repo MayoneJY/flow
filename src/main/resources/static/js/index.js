@@ -212,38 +212,48 @@ const viewFixedItems = () => {
         );
 
     })
+    selectFixedItem();
 }
 
 /* 고정 확장자를 선택하는 함수 */
-$("#fixed-list").on("change", "input", function(){
-    try {
-        $.ajax({
-            url: "/updateFixedExtension",
-            type: "PUT",
-            data: {extension: this.id, status: this.checked},
-            traditional: true,
-            success: function (data) {
-                if (data === true) {
-                    fixedItems.find(item => item.extension === this.id).status = true;
+const selectFixedItem = () => {
+    if(fixedItems.length === 0){
+        return;
+    }
+    const $inputCheckbox = $('input[type="checkbox"]');
+    $inputCheckbox.off("click");
+    $inputCheckbox.on("click", function(e){
+        e.preventDefault();
+        const checkBox = this;
+        try {
+            $.ajax({
+                url: "/updateFixedExtension",
+                type: "PUT",
+                contentType: "application/json",
+                data: JSON.stringify({extension: checkBox.id, status: checkBox.checked}),
+                traditional: true,
+                success: function (data) {
+                    if (data === true) {
+                        fixedItems.find(item => item.extension === checkBox.id).status = true;
+                        checkBox.checked = !checkBox.checked;
 
-                } else {
+                    } else {
+                        alert("고정 확장자를 변경하지 못했습니다.")
+                    }
+                },
+                error: function (error) {
+                    console.error(error);
                     alert("고정 확장자를 변경하지 못했습니다.")
-                    this.checked = !this.checked;
                 }
-            },
-            error: function (error) {
-                console.error(error);
-                alert("고정 확장자를 변경하지 못했습니다.")
-                this.checked = !this.checked;
-            }
-        })
-    }
-    catch (e) {
-        console.log(e);
-        alert("고정 확장자를 변경하지 못했습니다.")
-        this.checked = !this.checked;
-    }
-});
+            })
+        }
+        catch (e) {
+            console.log(e);
+            alert("고정 확장자를 변경하지 못했습니다.")
+        }
+    });
+}
+
 
 // 커스텀 확장자를 추가하는 함수
 $("#custom-add").on("click", function(){
