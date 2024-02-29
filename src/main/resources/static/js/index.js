@@ -203,7 +203,7 @@ function highlight(e) {
 function unHighlight(e) {
     preventDefaults(e);
     $dropArea.removeClass("highlight");
-    if(uploadFiles.length !== 0){
+    if(Array.from(uploadFiles.keys()).length !== 0){
         $dropArea.addClass("display-none");
     }
 }
