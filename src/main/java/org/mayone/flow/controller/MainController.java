@@ -3,6 +3,7 @@ package org.mayone.flow.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.mayone.flow.model.FileDTO;
+import org.mayone.flow.model.FixedExtensionDTO;
 import org.mayone.flow.service.ExtensionService;
 import org.mayone.flow.service.FileService;
 import org.mayone.flow.util.FileUtils;
@@ -42,6 +43,11 @@ public class MainController {
     @GetMapping("/customExtensions")
     public ResponseEntity<String[]> customExtensions() {
         return ResponseEntity.ok(extensionService.selectExtensions());
+    }
+
+    @GetMapping("/fixedExtensions")
+    public ResponseEntity<List<FixedExtensionDTO>> fixedExtensions() {
+        return ResponseEntity.ok(extensionService.selectFixedExtensions());
     }
 
     @PostMapping("/insertCustomExtension")

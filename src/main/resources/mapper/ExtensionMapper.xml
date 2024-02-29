@@ -11,4 +11,8 @@
     <delete id="deleteCustomExtension" parameterType="java.lang.String">
         DELETE FROM customextensions WHERE extension = #{extension}
     </delete>
+
+    <select id="selectFixedExtensions" resultType="org.mayone.flow.model.FixedExtensionDTO">
+        SELECT * FROM fixed_extension
+    </select>
 </mapper>

@@ -1,7 +1,27 @@
-let fixedItems = [];
-const selectedFixedItems = [];
+let fixedItems = {};
 let customItems = [];
 const $customInputText = $("#custom-input-text");
+
+
+const noFileGuide = '업로드된 파일이 없습니다.';
+const errorFileGuide = '파일 정보를 가져오는데 실패했습니다.';
+const errorCustomGuide = '커스텀 확장자를 가져오는데 실패했습니다.';
+const errorFixedGuide = '고정 확장자를 가져오는데 실패했습니다.';
+
+function guideBox(guideMessage){
+    return $(`
+        <div class="guide-box">
+            <span class="material-symbols-outlined custom-guide-icon">
+                error
+            </span>
+            <span>
+                ${guideMessage}
+            </span>
+        </div>
+    `);
+}
+
+
 
 // 드래그 방지
 $(document).on("selectstart", function(e){
@@ -54,26 +74,27 @@ const insertCustomExtension = (text) => {
             type: "POST",
             data: {extension: text},
             traditional: true,
-        }).then(data => {
-            if (data === true) {
-                customItems.push(text);
-                viewCustomItemCount();
-                $("#custom-list").append(
-                    `<button class="custom-item" id="${text}">
-                        ${text}
-                        <span class="material-symbols-outlined custom-trash-icon">
-                            delete
-                        </span>
-                    </button>`
-                );
-                deleteCustomItem();
-                $customInputText.text("");
-            } else {
-                //     TODO: db에 추가하지 못했을 때의 처리
+            success: function (data) {
+                if (data === true) {
+                    customItems.push(text);
+                    viewCustomItemCount();
+                    $("#custom-list").append(
+                        `<button class="custom-item" id="${text}">
+                            ${text}
+                            <span class="material-symbols-outlined custom-trash-icon">
+                                delete
+                            </span>
+                        </button>`
+                    );
+                    deleteCustomItem();
+                    $customInputText.text("");
+                } else {
+                    // TODO: db에 추가하지 못했을 때의 처리
+                }
+            },
+            error: function (error) {
+                console.error(error);
             }
-
-        }).catch((error) => {
-            console.error(error);
         });
     }
     catch (e) {
@@ -83,14 +104,25 @@ const insertCustomExtension = (text) => {
 
 /* 커스텀 확장자를 가져오는 함수 */
 const getCustomItems = () => {
-    $.ajax({
-        url: "/customExtensions",
-        type: "GET",
-        traditional: true,
-    }).then(data => {
-        customItems = data;
-        viewCustomItems();
-    })
+    try {
+        $.ajax({
+            url: "/customExtensions",
+            type: "GET",
+            traditional: true,
+            success: function (data) {
+                customItems = data;
+                viewCustomItems();
+            },
+            error: function (error) {
+                console.error(error);
+                $('.custom-field').append(guideBox(errorCustomGuide));
+            }
+        })
+    }
+    catch (e) {
+        console.log(e);
+        $('.custom-field').append(guideBox(errorCustomGuide));
+    }
 }
 getCustomItems();
 
@@ -146,14 +178,24 @@ const viewCustomItemCount = () => {
 
 /* 고정 확장자를 가져오는 함수 */
 const getFixedItems = () => {
-    $.ajax({
-        url: "/fixedExtensions",
-        type: "GET",
-        traditional: true,
-    }).then(data => {
-        fixedItems = data;
-        viewFixedItems();
-    })
+    try {
+        $.ajax({
+            url: "/fixedExtensions",
+            type: "GET",
+            traditional: true,
+            success: function (data) {
+                fixedItems = data;
+                viewFixedItems();
+            },
+            error: function (error) {
+                console.error(error);
+                $('#fixed-list').append(guideBox(errorFixedGuide));
+            }})
+    }
+    catch (e) {
+        console.log(e);
+        $('.fixed-field').append(guideBox(errorFixedGuide));
+    }
 
 }
 getFixedItems();
@@ -163,9 +205,9 @@ const viewFixedItems = () => {
     fixedItems.forEach(item => {
         $("#fixed-list").append(
             `
-            <input type="checkbox" id="${item}"/>
-            <label class="input-check" for="${item}">
-                ${item}
+            <input type="checkbox" id="${item.extension}" ${item.status ? 'checked' : ''}/>
+            <label class="input-check" for="${item.extension}">
+                ${item.extension}
             </label>`
         );
 
@@ -347,21 +389,6 @@ $dropArea.on("drop", handleDrop);
 
 
 // 파일 정보 가져오기
-const noFileGuide = '업로드된 파일이 없습니다.';
-const errorFileGuide = '파일 정보를 가져오는데 실패했습니다.';
-
-function guideBox(guideMessage){
-    return $(`
-        <div class="guide-box">
-            <span class="material-symbols-outlined custom-guide-icon">
-                error
-            </span>
-            <span>
-                ${guideMessage}
-            </span>
-        </div>
-    `);
-}
 const $fileUploaded = $("#file-uploaded");
 function getFileInformation(){
     $.ajax({

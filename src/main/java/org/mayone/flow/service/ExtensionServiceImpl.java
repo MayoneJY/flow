@@ -2,6 +2,7 @@ package org.mayone.flow.service;
 
 import org.apache.ibatis.session.SqlSession;
 import org.mayone.flow.mapper.ExtensionMapper;
+import org.mayone.flow.model.FixedExtensionDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,5 +32,11 @@ public class ExtensionServiceImpl implements ExtensionService {
     public boolean deleteExtension(String extension) {
         ExtensionMapper em = sqlSession.getMapper(ExtensionMapper.class);
         return em.deleteCustomExtension(extension);
+    }
+
+    @Transactional(readOnly = true)
+    public List<FixedExtensionDTO> selectFixedExtensions() {
+        ExtensionMapper em = sqlSession.getMapper(ExtensionMapper.class);
+        return em.selectFixedExtensions();
     }
 }
