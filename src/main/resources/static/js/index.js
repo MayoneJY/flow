@@ -334,7 +334,10 @@ function getFileInformation(){
                             <div class="details">
                                 <header class="header">
                                     <span class="name">${file.originalName}</span>
-                                    <span class="size">${bytesToMegabytes(file.size)} mb</span>
+                                    <div class="file-info">
+                                        <span class="size">${bytesToMegabytes(file.size)} mb</span>
+                                        <span class="date">${file.timeStamp.split(' ')[0]}</span>
+                                    </div>
                                 </header>
                             </div>
                         </div>`

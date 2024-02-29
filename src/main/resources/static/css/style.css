@@ -395,8 +395,9 @@ input[type="file"] {
 .file .details .header {
    display: flex;
    height: 100%;
-    align-items: center;
+   align-items: center;
 }
+
 .file .details .header .name {
    width: 300px;
    white-space: nowrap;
@@ -407,6 +408,15 @@ input[type="file"] {
    margin-left: auto;
 }
 
+#file-uploaded .file .details .header .file-info {
+   margin-left: auto;
+}
+
+#file-uploaded .file .details .header .file-info span {
+   display: block;
+   text-align: right;
+}
+
 .upload-content {
    position: relative;
    height: 430px;
@@ -415,4 +425,18 @@ input[type="file"] {
 .display-none {
    /*opacity: 0;*/
     display: none !important;
+}
+
+/*#file-uploaded {*/
+/*   height: 430px;*/
+/*}*/
+
+#uploaded-files {
+   max-height: 360px;
+   overflow: auto;
+}
+
+#uploaded-files .file:hover {
+   background: #f5f5f5;
+   cursor: pointer;
 }
