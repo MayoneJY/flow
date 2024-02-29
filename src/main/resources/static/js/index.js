@@ -210,10 +210,24 @@ function unHighlight(e) {
 
 function handleDrop(e) {
     // TODO: 중복된 파일이 있는지 확인
+
     unHighlight(e);
+
     const dt = e.originalEvent.dataTransfer;
     const files = dt.files;
+
+    // 확장자 제한
+    for(let i = 0; i < files.length; i++){
+        const file = files[i];
+        const extension = file.name.split('.').pop();
+        if(customItems.includes(extension)){
+            alert("허용되지 않은 확장자입니다.")
+            return;
+        }
+    }
+
     $dropArea.addClass("display-none");
+
     handleFiles(files);
 
     animateFileList();
@@ -270,7 +284,6 @@ function uploadFile() {
         contentType: false,
         success: function (data) {
             alert("파일 업로드에 성공했습니다.")
-            console.log(data);
         },
         error: function (error) {
             alert("파일 업로드에 실패했습니다.")
@@ -316,7 +329,6 @@ function getFileInformation(){
         url: "/fileInformation",
         type: "GET",
         success: function (data) {
-            console.log(data);
             if(data.length === 0){
                 $fileUploaded.append(guideBox(noFileGuide));
             }
