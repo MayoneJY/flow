@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mayone.flow.mapper.FileMapper">
+    <insert id="insertFile" parameterType="list">
+        INSERT INTO files (original_name, save_name, size) VALUES
+        <foreach collection="list" item="file" separator=",">
+            (#{file.originalName}, #{file.saveName}, #{file.size})
+        </foreach>
+    </insert>
+</mapper>

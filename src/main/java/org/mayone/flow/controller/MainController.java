@@ -1,6 +1,7 @@
 package org.mayone.flow.controller;
 
 import org.mayone.flow.service.ExtensionService;
+import org.mayone.flow.service.FileService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,9 +17,11 @@ import java.io.IOException;
 public class MainController {
 
     private final ExtensionService extensionService;
+    private final FileService fileService;
 
-    public MainController(ExtensionService extensionService) {
+    public MainController(ExtensionService extensionService, FileService fileService) {
         this.extensionService = extensionService;
+        this.fileService = fileService;
     }
 
 //    @RequestMapping("/")
@@ -49,20 +52,8 @@ public class MainController {
 
     @PostMapping("/uploadFile")
     public ResponseEntity<Boolean> uploadFile(@RequestParam("file") MultipartFile[] files) {
-        String uploadPath = "/Users/jeongyeon/job/flowFiles";
-        System.out.println("files.length = " + files.length);
-        for (MultipartFile file : files) {
-            String fileName = file.getOriginalFilename();
 
-            try{
-                file.transferTo(new File(uploadPath + "/" + fileName));
-            } catch (Exception e) {
-                e.printStackTrace();
-                return ResponseEntity.ok(false);
-            }
-
-        }
-        return ResponseEntity.ok(true);
+        return ResponseEntity.ok(fileService.uploadFile(files));
     }
 
 }
