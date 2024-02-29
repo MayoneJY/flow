@@ -292,3 +292,61 @@ $dropArea.on("dragover", highlight);
 $fileList.on("dragover", highlight);
 $dropArea.on("dragleave", unHighlight);
 $dropArea.on("drop", handleDrop);
+
+
+// 파일 정보 가져오기
+const noFileGuide = '업로드된 파일이 없습니다.';
+const errorFileGuide = '파일 정보를 가져오는데 실패했습니다.';
+
+function guideBox(guideMessage){
+    return $(`
+        <div class="guide-box">
+            <span class="material-symbols-outlined custom-guide-icon">
+                error
+            </span>
+            <span>
+                ${guideMessage}
+            </span>
+        </div>
+    `);
+}
+
+const $fileUploaded = $("#file-uploaded");
+function getFileInformation(){
+    $.ajax({
+        url: "/fileInformation",
+        type: "GET",
+        success: function (data) {
+            if(data.length === 0){
+                $fileUploaded.append(guideBox(noFileGuide));
+            }
+            else{
+                data.forEach(file => {
+                    $fileUploaded.append(
+                        `
+                        <div id="uploaded-files" class="content-border">
+                            <div class="file">
+                                <div class="thumbnail">
+                                    <span class="material-symbols-outlined uploaded-file-icon">
+                                        description
+                                    </span>
+                                </div>
+                                <div class="details">
+                                    <header class="header">
+                                        <span class="name">${file.originalName}</span>
+                                        <span class="size">${bytesToMegabytes(file.size)} mb</span>
+                                    </header>
+                                </div>
+                            </div>
+                        </div>`
+                    );
+                })
+            }
+        },
+        error: function (error) {
+            $fileUploaded.append(guideBox(errorFileGuide));
+        }
+    })
+}
+
+getFileInformation();
