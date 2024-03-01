@@ -12,11 +12,19 @@
         DELETE FROM customextensions WHERE extension = #{extension}
     </delete>
 
+    <delete id="clearCustomExtensions">
+        DELETE FROM customextensions
+    </delete>
+
     <select id="selectFixedExtensions" resultType="org.mayone.flow.model.FixedExtensionDTO">
         SELECT * FROM fixed_extension ORDER BY idx
     </select>
 
     <update id="updateFixedExtension" parameterType="org.mayone.flow.model.FixedExtensionDTO">
         UPDATE fixed_extension SET status = #{status} WHERE extension = #{extension}
+    </update>
+
+    <update id="clearFixedExtensions">
+        UPDATE fixed_extension SET status = FALSE
     </update>
 </mapper>

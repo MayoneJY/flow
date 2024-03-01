@@ -371,7 +371,7 @@ $('.clear-block').on("click", function(){
                     alert("고정 확장자를 모두 해제하지 못했습니다.")
                 }
             }
-        
+
         }
     }
 })

@@ -17,4 +17,8 @@ public interface ExtensionService {
     List<FixedExtensionDTO> selectFixedExtensions();
 
     boolean updateFixedExtension(FixedExtensionDTO fixedExtensionDTO);
+
+    Boolean clearFixedExtensions();
+
+    Boolean clearCustomExtensions();
 }

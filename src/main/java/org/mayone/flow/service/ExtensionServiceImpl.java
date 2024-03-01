@@ -45,4 +45,16 @@ public class ExtensionServiceImpl implements ExtensionService {
         ExtensionMapper em = sqlSession.getMapper(ExtensionMapper.class);
         return em.updateFixedExtension(fixedExtensionDTO);
     }
+
+    @Transactional
+    public Boolean clearFixedExtensions() {
+        ExtensionMapper em = sqlSession.getMapper(ExtensionMapper.class);
+        return em.clearFixedExtensions();
+    }
+
+    @Transactional
+    public Boolean clearCustomExtensions() {
+        ExtensionMapper em = sqlSession.getMapper(ExtensionMapper.class);
+        return em.clearCustomExtensions();
+    }
 }
