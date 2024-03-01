@@ -467,7 +467,7 @@ function getFileInformation(){
                 data.forEach(file => {
 
                     $file = $(
-                        `<div class="file">
+                        `<div class="file" id="file-${file.idx}">
                             <div class="thumbnail">
                                 <span class="material-symbols-outlined uploaded-file-icon">
                                     description
@@ -477,6 +477,10 @@ function getFileInformation(){
                                 <header class="header">
                                     <span class="name">${file.originalName}</span>
                                     <div class="file-info">
+                                        <span class="material-symbols-outlined file-trash-icon content-border" 
+                                            id="file-trash-${file.idx}">
+                                            delete
+                                        </span>
                                         <span class="size">${bytesToMegabytes(file.size)} mb</span>
                                         <span class="date">${file.createdDate.split('T')[0]}</span>
                                     </div>
@@ -489,6 +493,30 @@ function getFileInformation(){
                     });
                     $uploadedFiles.append($file);
                     $fileUploaded.append($uploadedFiles)
+                    $("#file-trash-" + file.idx).on("click", function(e){
+                        e.stopPropagation();
+                        if(confirm("파일을 삭제하시겠습니까?")){
+                            $.ajax({
+                                url: "/deleteFile",
+                                type: "DELETE",
+                                contentType: "application/json",
+                                data: JSON.stringify(file),
+                                success: function (data) {
+                                    if(data === true){
+                                        $("#file-" + file.idx).remove();
+                                        alert("성공적으로 파일을 삭제했습니다.")
+                                    }
+                                    else{
+                                        alert("파일을 삭제하지 못했습니다.")
+                                    }
+                                },
+                                error: function (error) {
+                                    console.error(error);
+                                    alert("파일을 삭제하지 못했습니다.")
+                                }
+                            })
+                        }
+                    })
                 })
             }
         },
