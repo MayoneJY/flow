@@ -43,13 +43,15 @@ $customInputText.on("focus", function(){
 
 // 입력칸 클릭시 커서 마지막으로 이동
 const setCursor = ($input, i) => {
-    const range = document.createRange();
-    const sel = window.getSelection();
     const length = i || $input.text().length;
-    range.setStart($input[0].childNodes[0], length);
-    range.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(range);
+    if(length !== 0) {
+        const range = document.createRange();
+        const sel = window.getSelection();
+        range.setStart($input[0].childNodes[0], length);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
 }
 
 /*
@@ -363,6 +365,18 @@ function handleDrop(e) {
     const dt = e.originalEvent.dataTransfer;
     const files = dt.files;
 
+
+    handleFiles(files);
+
+}
+
+function animateScrollTop($list) {
+    if ($list) {
+        $list.animate({ scrollTop: $list.prop("scrollHeight")}, 500);
+    }
+}
+
+function handleFiles(files) {
     // 확장자 제한
     for(let i = 0; i < files.length; i++){
         const file = files[i];
@@ -373,21 +387,6 @@ function handleDrop(e) {
         }
     }
 
-    $dropArea.addClass("display-none");
-
-    handleFiles(files);
-
-    animateScrollTop();
-}
-
-function animateScrollTop($list) {
-    if ($list) {
-        $list.animate({ scrollTop: $list.prop("scrollHeight")}, 500);
-    }
-}
-
-function handleFiles(files) {
-    // TODO: 확장자 제한 추가.
     for(let i = 0; i < files.length; i++){
         uploadFiles.append("file", files[i]);
         uploadFilesId.push({name: files[i].name, id: uploadFilesId.length + 1})
@@ -446,6 +445,7 @@ function renderFile(file) {
 
         }
     })
+    animateScrollTop();
 }
 
 function uploadFile() {
