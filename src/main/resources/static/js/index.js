@@ -460,6 +460,7 @@ function uploadFile() {
         contentType: false,
         success: function (data) {
             alert("파일 업로드에 성공했습니다.")
+            getFileInformation();
         },
         error: function (error) {
             alert("파일 업로드에 실패했습니다.")
@@ -494,7 +495,16 @@ function getFileInformation(){
                 $fileUploaded.append(guideBox(noFileGuide));
             }
             else{
-                $uploadedFiles = $(`<div id="uploaded-files" class="content-border"></div>`)
+                $fileUploaded.children('.guide-box').remove();
+                let $uploadedFiles;
+                if($fileUploaded.has("#uploaded-files").length === 0){
+                    $uploadedFiles = $(`<div id="uploaded-files" class="content-border"></div>`);
+                }
+                else{
+                    $uploadedFiles = $("#uploaded-files");
+                    $uploadedFiles.empty();
+                }
+
                 data.forEach(file => {
 
                     $file = $(
