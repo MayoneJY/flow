@@ -41,4 +41,11 @@ public class FileServiceImpl implements FileService{
         FileMapper fm = sqlSession.getMapper(FileMapper.class);
         return fm.selectFile(idx);
     }
+
+    @Transactional
+    public boolean deleteFile(FileDTO fileDTO) {
+        FileMapper fm = sqlSession.getMapper(FileMapper.class);
+        fm.deleteFile(fileDTO.getIdx());
+        return fileUtils.deleteFile(fileDTO);
+    }
 }

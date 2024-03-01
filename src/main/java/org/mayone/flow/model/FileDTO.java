@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class FileDTO {
-    private Long idx;
+    private int idx;
     private String originalName;
     private String saveName;
     private Long size;

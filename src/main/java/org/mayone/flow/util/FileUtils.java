@@ -50,4 +50,9 @@ public class FileUtils {
             throw new RuntimeException("file not found : " + filePath.toString());
         }
     }
+
+    public boolean deleteFile(FileDTO fileDTO) {
+        File file = new File(uploadPath + "/" + fileDTO.getSaveName());
+        return file.delete();
+    }
 }

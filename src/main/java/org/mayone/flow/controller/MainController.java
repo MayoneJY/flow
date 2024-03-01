@@ -2,6 +2,7 @@ package org.mayone.flow.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Delete;
 import org.mayone.flow.model.FileDTO;
 import org.mayone.flow.model.FixedExtensionDTO;
 import org.mayone.flow.service.ExtensionService;
@@ -85,6 +86,11 @@ public class MainController {
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .header("Content-Disposition", "attachment; filename=\"" + originalName + "\"")
                 .body(resource);
+    }
+
+    @DeleteMapping("/deleteFile")
+    public ResponseEntity<Boolean> deleteFile(@RequestBody FileDTO fileDTO) {
+        return ResponseEntity.ok(fileService.deleteFile(fileDTO));
     }
 
 }

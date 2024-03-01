@@ -13,4 +13,6 @@ public interface FileService {
     List<FileDTO> fileInformation();
 
     FileDTO selectFile(int idx);
+
+    boolean deleteFile(FileDTO fileDTO);
 }
