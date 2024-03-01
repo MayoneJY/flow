@@ -32,7 +32,7 @@
   - [x] bat, cmd, com, cpl, exe, scr, js
   - [x] default: unCheck
   - [x] isCheck에 따라 db에 저장
-  - [ ] 커스텀 확장자에 표시 X
+  - [x] 커스텀 확장자에 표시 X
 - 커스텀 확장자
     - [x] 문자열을 입력할 수 있는 기능
         - [x] 기본 (확장자 입력)

@@ -36,6 +36,21 @@ $customInputText.on("click", function(){
     $(this).focus();
 })
 
+// 커스텀 확장자 입력창 포커스 이벤트
+$customInputText.on("focus", function(){
+    setCursor($(this));
+})
+
+// 입력칸 클릭시 커서 마지막으로 이동
+const setCursor = ($input) => {
+    const range = document.createRange();
+    const sel = window.getSelection();
+    range.setStart($input[0].childNodes[0], $input.text().length);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+
 /*
  * 커스텀 확장자 입력창 이벤트
  * 글자수 제한
@@ -45,13 +60,7 @@ $customInputText.on("input", function (){
     const text = $this.text();
     if(text.length > 20){
         $this.text(text.substring(0, 20));
-        const range = document.createRange();
-        const sel = window.getSelection();
-        range.setStart($this[0].childNodes[0], 20);
-        range.collapse(true);
-        sel.removeAllRanges();
-        sel.addRange(range);
-
+        setCursor($this);
     }
 })
 
@@ -271,6 +280,14 @@ $("#custom-add").on("click", function(){
                 alert("이미 존재하는 확장자입니다.")
                 // TODO: 알림박스로 교체
             }
+            else if(text.length > 20){
+                alert("최대 20자까지 입력할 수 있습니다.")
+
+            }
+            else if(fixedItems.find(item => item.extension === text)){
+                alert("고정 확장자는 추가할 수 없습니다.")
+                $customInputText.text("");
+            }
             else{
                 insertCustomExtension(text);
             }
@@ -279,6 +296,9 @@ $("#custom-add").on("click", function(){
             // TODO: 아무것도 입력하지 않았을 때의 처리
         }
         $customInputText.focus();
+        //     커서 마지막으로 이동
+        setCursor($customInputText);
+
     }
     catch (e){
         console.error(e);
