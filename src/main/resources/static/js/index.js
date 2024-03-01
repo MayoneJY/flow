@@ -245,7 +245,7 @@ const selectFixedItem = () => {
                 traditional: true,
                 success: function (data) {
                     if (data === true) {
-                        fixedItems.find(item => item.extension === checkBox.id).status = true;
+                        fixedItems.find(item => item.extension === checkBox.id).status = !checkBox.checked;
                         checkBox.checked = !checkBox.checked;
 
                     } else {
@@ -360,7 +360,7 @@ function handleDrop(e) {
     for(let i = 0; i < files.length; i++){
         const file = files[i];
         const extension = file.name.split('.').pop();
-        if(customItems.includes(extension)){
+        if(customItems.includes(extension) || fixedItems.find(item => item.extension === extension && item.status === true)){
             alert("허용되지 않은 확장자입니다.")
             return;
         }
