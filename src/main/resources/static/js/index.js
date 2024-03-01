@@ -536,6 +536,10 @@ function getFileInformation(){
                                     if(data === true){
                                         $("#uploaded-" + file.idx).remove();
                                         alert("성공적으로 파일을 삭제했습니다.")
+                                        if($("#uploaded-files").children().length === 0) {
+                                            $fileUploaded.append(guideBox(noFileGuide));
+                                            $uploadedFiles.remove();
+                                        }
                                     }
                                     else{
                                         alert("파일을 삭제하지 못했습니다.")
