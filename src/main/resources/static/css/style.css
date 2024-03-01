@@ -49,7 +49,8 @@ body {
 #list-count {
    color: #777;
    display: inline-block;
-   margin-left: 10px;
+   margin-left: 5px;
+   font-size: 13px;
 }
 
 div {
@@ -80,6 +81,7 @@ div {
    margin-bottom: 10px;
    color: #333;
    display: inline-block;
+   width: 100%;
 }
 
 .material-symbols-outlined {
@@ -189,6 +191,27 @@ fieldset {
 
 input{
    outline: none;
+}
+
+.clear-block {
+   position: absolute;
+   right: 0;
+   bottom: 0;
+   cursor: pointer;
+   font-size: 13px;
+}
+
+.clear-block:hover {
+   color: #ff5e5e;
+}
+
+.relative {
+   position: relative;
+}
+
+.clear-icon {
+   font-size: 20px;
+   vertical-align: bottom;
 }
 
 #custom-add {

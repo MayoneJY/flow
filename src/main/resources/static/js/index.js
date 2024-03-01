@@ -314,16 +314,76 @@ $("#custom-add").on("click", function(){
     }
 })
 
-// $(".btn-check").on("click", function(){
-//     if($(this).hasClass("btn-checked")){
-//         $(this).removeClass("btn-checked");
-//         $(this).find("span").text("check_box_outline_blank")
-//     }
-//     else{
-//         $(this).addClass("btn-checked");
-//         $(this).find("span").text("check_box")
-//     }
-// })
+$('.clear-block').on("click", function(){
+    if($(this).hasClass("custom-clear")) {
+        if(customItems.length === 0){
+            return;
+        }
+        if(confirm("커스텀 확장자를 모두 삭제하시겠습니까?")){
+            try {
+                $.ajax({
+                    url: "/clearCustomExtensions",
+                    type: "DELETE",
+                    success: function (data) {
+                        if (data === true) {
+                            customItems = [];
+                            $("#custom-list").empty();
+                            viewCustomItemCount();
+                        } else {
+                            alert("커스텀 확장자를 삭제하지 못했습니다.")
+                        }
+                    },
+                    error: function (error) {
+                        console.error(error);
+                        alert("커스텀 확장자를 삭제하지 못했습니다.")
+                    }
+                })
+            }
+            catch (e) {
+                console.log(e);
+                alert("커스텀 확장자를 삭제하지 못했습니다.")
+            }
+        }
+    }
+    else if($(this).hasClass("fixed-clear")){
+        if(fixedItems.find(item => item.status === true)){
+            if(confirm("고정 확장자를 모두 해제하시겠습니까?")){
+                try {
+                    $.ajax({
+                        url: "/clearFixedExtensions",
+                        type: "PUT",
+                        success: function (data) {
+                            if (data === true) {
+                                fixedItems.forEach(item => item.status = false);
+                                $('input[type="checkbox"]').prop("checked", false);
+                            } else {
+                                alert("고정 확장자를 모두 해제하지 못했습니다.")
+                            }
+                        },
+                        error: function (error) {
+                            console.error(error);
+                            alert("고정 확장자를 모두 해제하지 못했습니다.")
+                        }
+                    })
+                }
+                catch (e) {
+                    console.log(e);
+                    alert("고정 확장자를 모두 해제하지 못했습니다.")
+                }
+            }
+        
+        }
+    }
+})
+
+
+
+
+
+
+
+
+
 
 // 파일 업로드
 function bytesToMegabytes(bytes) {
