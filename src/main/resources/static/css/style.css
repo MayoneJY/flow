@@ -402,21 +402,21 @@ input[type="file"] {
    align-items: center;
 }
 
-.file .details .header .name {
-   width: 300px;
-   white-space: nowrap;
-   text-overflow: ellipsis;
-   overflow: hidden;
-}
-.file .details .header .size {
+/*.file .details .header .name {*/
+/*   width: 300px;*/
+/*   white-space: nowrap;*/
+/*   text-overflow: ellipsis;*/
+/*   overflow: hidden;*/
+/*}*/
+/*.file .details .header .size {*/
+/*   margin-left: auto;*/
+/*}*/
+
+.file .details .header .file-info {
    margin-left: auto;
 }
 
-#file-uploaded .file .details .header .file-info {
-   margin-left: auto;
-}
-
-#file-uploaded .file .details .header .file-info span {
+.file .details .header .file-info span {
    display: block;
    text-align: right;
 }

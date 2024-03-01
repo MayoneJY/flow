@@ -332,6 +332,7 @@ function bytesToMegabytes(bytes) {
 const $dropArea = $("#drop-file");
 const $fileList = $("#files");
 const uploadFiles = new FormData();
+const uploadFilesId = [];
 
 function preventDefaults(e) {
     e.preventDefault();
@@ -349,7 +350,7 @@ function highlight(e) {
 function unHighlight(e) {
     preventDefaults(e);
     $dropArea.removeClass("highlight");
-    if(Array.from(uploadFiles.keys()).length !== 0){
+    if(uploadFilesId.length !== 0){
         $dropArea.addClass("display-none");
     }
 }
@@ -386,8 +387,10 @@ function animateScrollTop($list) {
 }
 
 function handleFiles(files) {
+    // TODO: 확장자 제한 추가.
     for(let i = 0; i < files.length; i++){
         uploadFiles.append("file", files[i]);
+        uploadFilesId.push({name: files[i].name, id: uploadFilesId.length + 1})
     }
     files = [...files];
     $dropArea.addClass("display-none");
@@ -396,12 +399,13 @@ function handleFiles(files) {
 
 function previewFile(file) {
     renderFile(file);
-    animateFileList();
+    animateScrollTop($fileList);
 }
 
 function renderFile(file) {
+    const id = uploadFilesId.find(item => item.name === file.name).id;
     $fileList.append(
-        `<div class="file">
+        `<div class="file" id="file-${id}">
             <div class="thumbnail">
                 <span class="material-symbols-outlined uploaded-file-icon">
                     description
@@ -410,11 +414,38 @@ function renderFile(file) {
             <div class="details">
                 <header class="header">
                     <span class="name">${file.name}</span>
-                    <span class="size">${bytesToMegabytes(file.size)} mb</span>
+                    <div class="file-info">
+                        <span class="material-symbols-outlined file-trash-icon content-border" 
+                            id="file-trash-${id}">
+                            delete
+                        </span>
+                        <span class="size">${bytesToMegabytes(file.size)} mb</span>
+                    </div>
                 </header>
             </div>
         </div>`
     );
+    $(`#file-trash-${id}`).on("click", function(){
+        if(confirm("파일을 제거하시겠습니까?")){
+            // file.name 과 같은 이름을 가진 파일을 제거
+            const tempFiles = [];
+            for(const [key, value] of uploadFiles.entries()){
+                if(value.name !== file.name) {
+                    tempFiles.push(value);
+                }
+            }
+            uploadFilesId.splice(uploadFilesId.findIndex(item => item.name === file.name), 1);
+            uploadFiles.delete("file");
+            for(let i = 0; i < tempFiles.length; i++){
+                uploadFiles.append("file", tempFiles[i]);
+            }
+            $(`#file-${id}`).remove();
+            if(uploadFilesId.length === 0){
+                $dropArea.removeClass("display-none");
+            }
+
+        }
+    })
 }
 
 function uploadFile() {
@@ -467,7 +498,7 @@ function getFileInformation(){
                 data.forEach(file => {
 
                     $file = $(
-                        `<div class="file" id="file-${file.idx}">
+                        `<div class="file" id="uploaded-${file.idx}">
                             <div class="thumbnail">
                                 <span class="material-symbols-outlined uploaded-file-icon">
                                     description
@@ -478,7 +509,7 @@ function getFileInformation(){
                                     <span class="name">${file.originalName}</span>
                                     <div class="file-info">
                                         <span class="material-symbols-outlined file-trash-icon content-border" 
-                                            id="file-trash-${file.idx}">
+                                            id="uploaded-trash-${file.idx}">
                                             delete
                                         </span>
                                         <span class="size">${bytesToMegabytes(file.size)} mb</span>
@@ -493,7 +524,7 @@ function getFileInformation(){
                     });
                     $uploadedFiles.append($file);
                     $fileUploaded.append($uploadedFiles)
-                    $("#file-trash-" + file.idx).on("click", function(e){
+                    $("#uploaded-trash-" + file.idx).on("click", function(e){
                         e.stopPropagation();
                         if(confirm("파일을 삭제하시겠습니까?")){
                             $.ajax({
@@ -503,7 +534,7 @@ function getFileInformation(){
                                 data: JSON.stringify(file),
                                 success: function (data) {
                                     if(data === true){
-                                        $("#file-" + file.idx).remove();
+                                        $("#uploaded-" + file.idx).remove();
                                         alert("성공적으로 파일을 삭제했습니다.")
                                     }
                                     else{
