@@ -91,7 +91,8 @@ const insertCustomExtension = (text) => {
                 if (data === true) {
                     customItems.push(text);
                     viewCustomItemCount();
-                    $("#custom-list").append(
+                    $customList = $("#custom-list");
+                    $customList.append(
                         `<button class="custom-item" id="${text}">
                             ${text}
                             <span class="material-symbols-outlined custom-trash-icon">
@@ -101,6 +102,7 @@ const insertCustomExtension = (text) => {
                     );
                     deleteCustomItem();
                     $customInputText.text("");
+                    animateScrollTop($customList);
                 } else {
                     // TODO: db에 추가하지 못했을 때의 처리
                 }
@@ -374,14 +376,13 @@ function handleDrop(e) {
 
     handleFiles(files);
 
-    animateFileList();
+    animateScrollTop();
 }
 
-function animateFileList() {
-    if ($fileList) {
-        $fileList.animate({ scrollTop: $fileList.prop("scrollHeight")}, 500);
+function animateScrollTop($list) {
+    if ($list) {
+        $list.animate({ scrollTop: $list.prop("scrollHeight")}, 500);
     }
-
 }
 
 function handleFiles(files) {
