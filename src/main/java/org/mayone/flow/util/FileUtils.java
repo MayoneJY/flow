@@ -20,8 +20,8 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class FileUtils {
-    private final String uploadPath = "/Users/jeongyeon/job/flowFiles";
-//    private final String uploadPath = "/home/mayone/flow/downloads";
+//    private final String uploadPath = "/Users/jeongyeon/job/flowFiles";
+    private final String uploadPath = "/home/mayone/flow/downloads";
 
 
     // 파일 업로드

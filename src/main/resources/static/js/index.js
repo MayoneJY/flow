@@ -87,29 +87,6 @@ $customInputText.on("keydown", function(e){
     }
 });
 
-function deleteFileByExtension(extension){
-    $.ajax({
-        url: "/deleteFileByExtension",
-        type: "DELETE",
-        data: {extension: extension},
-        traditional: true,
-        success: function (data) {
-            if(data === true){
-                alert("성공적으로 파일을 제거했습니다.")
-                allLoad()
-            }
-            else{
-                alert("파일을 제거하지 못했습니다.")
-            }
-        },
-        error: function (error) {
-            console.error(error);
-            alert("파일을 제거하지 못했습니다.")
-        }
-    })
-}
-
-
 /* 커스텀 확장자를 추가하는 함수 */
 function insertCustomExtension(text){
     try {
@@ -569,6 +546,10 @@ $dropArea.on("drop", handleDrop);
 // 파일 정보 가져오기
 const $fileUploaded = $("#file-uploaded");
 function getFileInformation(){
+    $fileUploaded.children('.guide-box').remove();
+    if($fileUploaded.has("#uploaded-files").length !== 0){
+        $("#uploaded-files").remove();
+    }
     $.ajax({
         url: "/fileInformation",
         type: "GET",
@@ -577,7 +558,7 @@ function getFileInformation(){
                 $fileUploaded.append(guideBox(noFileGuide));
             }
             else{
-                $fileUploaded.children('.guide-box').remove();
+
                 let $uploadedFiles;
                 if($fileUploaded.has("#uploaded-files").length === 0){
                     $uploadedFiles = $(`<div id="uploaded-files" class="content-border"></div>`);
@@ -627,7 +608,7 @@ function getFileInformation(){
                                     if(data === true){
                                         $("#uploaded-" + file.idx).remove();
                                         alert("성공적으로 파일을 삭제했습니다.")
-                                        if($("#uploaded-files").children().length === 0) {
+                                        if($uploadedFiles.children().length === 0) {
                                             $fileUploaded.append(guideBox(noFileGuide));
                                             $uploadedFiles.remove();
                                         }
@@ -651,5 +632,28 @@ function getFileInformation(){
         }
     })
 }
+
+function deleteFileByExtension(extension){
+    $.ajax({
+        url: "/deleteFileByExtension",
+        type: "DELETE",
+        data: {extension: extension},
+        traditional: true,
+        success: function (data) {
+            if(data === true){
+                alert("성공적으로 파일을 제거했습니다.")
+                allLoad()
+            }
+            else{
+                alert("파일을 제거하지 못했습니다.")
+            }
+        },
+        error: function (error) {
+            console.error(error);
+            alert("파일을 제거하지 못했습니다.")
+        }
+    })
+}
+
 
 allLoad();
