@@ -3,6 +3,7 @@ package org.mayone.flow.service;
 import org.apache.ibatis.session.SqlSession;
 import org.mayone.flow.mapper.ExtensionMapper;
 import org.mayone.flow.model.FixedExtensionDTO;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +24,15 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
     @Transactional
-    public boolean insertExtension(String extension) {
+    public int insertExtension(String extension) {
         ExtensionMapper em = sqlSession.getMapper(ExtensionMapper.class);
-        return em.insertCustomExtension(extension);
+        try {
+            return em.insertCustomExtension(extension) ? 1 : 0;
+        } catch (DataIntegrityViolationException e) {
+            return 2;
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Transactional

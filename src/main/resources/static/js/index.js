@@ -96,29 +96,27 @@ const insertCustomExtension = (text) => {
             type: "POST",
             data: {extension: text},
             traditional: true,
-            success: function (data) {
-                if (data === true) {
-                    customItems.push(text);
-                    viewCustomItemCount();
-                    const $customList = $("#custom-list");
-                    $customList.append(
-                        `<button class="custom-item" id="${text}">
-                            ${text}
-                            <span class="material-symbols-outlined custom-trash-icon">
-                                delete
-                            </span>
-                        </button>`
-                    );
-                    deleteCustomItem();
-                    $customInputText.text("");
-                    animateScrollTop($customList);
-                } else {
-                    // TODO: db에 추가하지 못했을 때의 처리
-                }
+            success: function () {
+                customItems.push(text);
+                viewCustomItemCount();
+                const $customList = $("#custom-list");
+                $customList.append(
+                    `<button class="custom-item" id="${text}">
+                        ${text}
+                        <span class="material-symbols-outlined custom-trash-icon">
+                            delete
+                        </span>
+                    </button>`
+                );
+                deleteCustomItem();
+                $customInputText.text("");
+                animateScrollTop($customList);
             },
             error: function (error) {
                 console.error(error);
-                alert("커스텀 확장자를 추가하지 못했습니다.")
+                alert(error.responseText)
+                allLoad();
+                $customInputText.text("");
             }
         });
     }

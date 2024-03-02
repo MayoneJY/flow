@@ -10,7 +10,7 @@ import java.util.List;
 public interface ExtensionService {
     String[] selectExtensions();
 
-    boolean insertExtension(String extension);
+    int insertExtension(String extension);
 
     boolean deleteExtension(String extension);
 

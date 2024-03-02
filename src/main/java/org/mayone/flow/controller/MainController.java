@@ -55,8 +55,14 @@ public class MainController {
 
     // 커스텀 확장자를 추가하는 메소드
     @PostMapping("/insertCustomExtension")
-    public ResponseEntity<Boolean> insertCustomExtension(String extension) {
-        return ResponseEntity.ok(extensionService.insertExtension(extension));
+    public ResponseEntity<?> insertCustomExtension(String extension) {
+        int result = extensionService.insertExtension(extension);
+        if (result == 1)
+            return ResponseEntity.ok().body(true);
+        else if (result == 2)
+            return ResponseEntity.badRequest().body("이미 존재하는 확장자입니다.");
+        else
+            return ResponseEntity.badRequest().body("확장자 추가에 실패했습니다.");
     }
 
     // 커스텀 확장자를 삭제하는 메소드

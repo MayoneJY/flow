@@ -2,18 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.mayone.flow.mapper.ExtensionMapper">
     <select id="selectExtensions" resultType='java.lang.String'>
-        SELECT extension FROM customextensions
+        SELECT extension FROM custom_extension
     </select>
     <insert id="insertCustomExtension" parameterType="java.lang.String">
-        INSERT INTO customextensions (extension) VALUES (#{extension})
+        INSERT INTO custom_extension (extension) VALUES (#{extension})
     </insert>
 
     <delete id="deleteCustomExtension" parameterType="java.lang.String">
-        DELETE FROM customextensions WHERE extension = #{extension}
+        DELETE FROM custom_extension WHERE extension = #{extension}
     </delete>
 
-    <delete id="clearCustomExtensions">
-        DELETE FROM customextensions
+    <delete id="clearcustom_extension">
+        DELETE FROM custom_extension
     </delete>
 
     <select id="selectFixedExtensions" resultType="org.mayone.flow.model.FixedExtensionDTO">
@@ -31,6 +31,6 @@
     <select id="selectAllExtensions" resultType="java.lang.String">
         SELECT extension FROM fixed_extension WHERE status = TRUE
         UNION
-        SELECT extension FROM customextensions
+        SELECT extension FROM custom_extension
     </select>
 </mapper>
