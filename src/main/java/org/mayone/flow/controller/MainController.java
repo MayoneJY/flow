@@ -88,8 +88,12 @@ public class MainController {
 
     // 커스텀 확장자를 삭제하는 메소드
     @DeleteMapping("/deleteCustomExtension")
-    public ResponseEntity<Boolean> deleteCustomExtension(String extension) {
-        return ResponseEntity.ok(extensionService.deleteExtension(extension));
+    public ResponseEntity<?> deleteCustomExtension(String extension) {
+        if (extensionService.deleteExtension(extension)){
+            return ResponseEntity.ok().body(true);
+        } else {
+            return ResponseEntity.badRequest().body("확장자가 존재하지 않거나 제거에 실패했습니다.");
+        }
     }
 
     // 커스텀 확장자를 초기화하는 메소드

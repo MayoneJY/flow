@@ -189,17 +189,15 @@ const deleteCustomItem = () => {
                 type: "DELETE",
                 data: {extension: this.id},
                 traditional: true,
-            }).then(data => {
-                if (data === true) {
+                success: function () {
                     $(this).remove();
                     customItems.splice(customItems.indexOf(this.id), 1);
                     viewCustomItemCount();
-                } else {
-                    //     TODO: db에서 삭제하지 못했을 때의 처리
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                    allLoad();
                 }
-            }).catch((error) => {
-                console.error(error);
-
             })
         } catch (e) {
             console.log(e);
