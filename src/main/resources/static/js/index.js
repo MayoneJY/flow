@@ -521,15 +521,15 @@ function uploadFile() {
         success: function (data) {
             alert("파일 업로드에 성공했습니다.")
             getFileInformation();
-        },
-        error: function (error) {
-            alert("파일 업로드에 실패했습니다.")
-            console.error(error);
-        },
-        complete: function () {
+            animateScrollTop($("#uploaded-files"));
             uploadFiles.delete("file");
             $fileList.empty();
+            uploadFilesId.splice(0, uploadFilesId.length);
             $dropArea.removeClass("display-none");
+        },
+        error: function (error) {
+            alert(error.responseText)
+            console.error(error);
         }
     })
 }

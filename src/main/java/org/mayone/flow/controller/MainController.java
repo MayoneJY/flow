@@ -73,8 +73,19 @@ public class MainController {
 
     // 파일을 업로드하는 메소드
     @PostMapping("/uploadFile")
-    public ResponseEntity<Boolean> uploadFile(@RequestParam("file") MultipartFile[] files) {
-        return ResponseEntity.ok(fileService.uploadFile(files));
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile[] files) {
+        try {
+            int result = fileService.uploadFile(files);
+            if (result == 1)
+                return ResponseEntity.ok().body(true);
+            else if (result == 2)
+                return ResponseEntity.badRequest().body("확장자 제한에 걸린 파일이 존재합니다.");
+            else
+                return ResponseEntity.badRequest().body("파일 업로드에 실패했습니다.");
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().body("파일 업로드에 실패했습니다.");
+        }
     }
 
     // 파일 정보를 조회하는 메소드

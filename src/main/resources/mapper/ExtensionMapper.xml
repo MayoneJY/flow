@@ -27,4 +27,10 @@
     <update id="clearFixedExtensions">
         UPDATE fixed_extension SET status = FALSE
     </update>
+
+    <select id="selectAllExtensions" resultType="java.lang.String">
+        SELECT extension FROM fixed_extension WHERE status = TRUE
+        UNION
+        SELECT extension FROM customextensions
+    </select>
 </mapper>

@@ -57,4 +57,10 @@ public class ExtensionServiceImpl implements ExtensionService {
         ExtensionMapper em = sqlSession.getMapper(ExtensionMapper.class);
         return em.clearCustomExtensions();
     }
+
+    @Transactional(readOnly = true)
+    public List<String> selectAllExtensions() {
+        ExtensionMapper em = sqlSession.getMapper(ExtensionMapper.class);
+        return em.selectAllExtensions();
+    }
 }

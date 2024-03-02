@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public interface FileService {
-    boolean uploadFile(MultipartFile[] files);
+    int uploadFile(MultipartFile[] files);
 
     List<FileDTO> fileInformation();
 

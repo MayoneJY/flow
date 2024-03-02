@@ -1,5 +1,6 @@
 package org.mayone.flow.util;
 
+import lombok.RequiredArgsConstructor;
 import org.mayone.flow.model.FileDTO;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -11,13 +12,16 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class FileUtils {
     private final String uploadPath = "/Users/jeongyeon/job/flowFiles";
+//    private final String uploadPath = "/home/mayone/flow/downloads";
 
+
+    // 파일 업로드
     public FileDTO uploadFile(MultipartFile multipartFile){
 
         String originalName = multipartFile.getOriginalFilename();
@@ -28,6 +32,7 @@ public class FileUtils {
             multipartFile.transferTo(new File(uploadPath + "/" + uuid + "." + extension));
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
         return FileDTO.builder()
                 .originalName(originalName)
@@ -37,6 +42,7 @@ public class FileUtils {
     }
 
 
+    // 파일 다운로드
     public Resource readFileAsResource(final FileDTO file) {
         String filename = file.getSaveName();
         Path filePath = Paths.get(uploadPath, filename);
@@ -51,8 +57,13 @@ public class FileUtils {
         }
     }
 
+    // 파일 삭제
     public boolean deleteFile(FileDTO fileDTO) {
         File file = new File(uploadPath + "/" + fileDTO.getSaveName());
         return file.delete();
+    }
+
+    public String getFileExtension(MultipartFile file) {
+        return StringUtils.getFilenameExtension(file.getOriginalFilename());
     }
 }

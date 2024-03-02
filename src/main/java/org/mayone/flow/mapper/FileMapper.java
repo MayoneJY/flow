@@ -12,4 +12,5 @@ public interface FileMapper {
     FileDTO selectFile(int idx);
 
     void deleteFile(int idx);
+
 }

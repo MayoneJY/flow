@@ -19,4 +19,6 @@ public interface ExtensionMapper {
     Boolean clearFixedExtensions();
 
     Boolean clearCustomExtensions();
+
+    List<String> selectAllExtensions();
 }

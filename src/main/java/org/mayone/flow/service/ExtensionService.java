@@ -21,4 +21,6 @@ public interface ExtensionService {
     Boolean clearFixedExtensions();
 
     Boolean clearCustomExtensions();
+
+    List<String> selectAllExtensions();
 }
