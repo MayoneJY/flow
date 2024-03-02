@@ -453,6 +453,11 @@ function handleFiles(files) {
             alert("허용되지 않은 확장자입니다.")
             return;
         }
+        // 용량 제한
+        if(bytesToMegabytes(file.size) > 128){
+            alert("128mb 이하의 파일만 업로드 가능합니다.")
+            return;
+        }
     }
 
     for(let i = 0; i < files.length; i++){
