@@ -23,6 +23,14 @@ public class ExtensionServiceImpl implements ExtensionService {
         return em.selectExtensions();
     }
 
+    /**
+     * 커스텀 확장자를 추가하는 메소드
+     * return 0: 확장자 추가 실패
+     * return 1: 확장자 추가 성공
+     * return 2: 이미 존재하는 확장자
+     * @param extension 추가할 확장자
+     * @return 추가 성공 여부
+     */
     @Transactional
     public int insertExtension(String extension) {
         ExtensionMapper em = sqlSession.getMapper(ExtensionMapper.class);

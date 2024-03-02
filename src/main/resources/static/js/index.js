@@ -23,11 +23,10 @@ function guideBox(guideMessage){
 
 
 // AllLoad
-const allLoad = () => {
+function allLoad(){
     getFixedItems();
     getCustomItems();
     getFileInformation();
-
 }
 
 // 드래그 방지
@@ -49,7 +48,7 @@ $customInputText.on("focus", function(){
 })
 
 // 입력칸 클릭시 커서 마지막으로 이동
-const setCursor = ($input, i) => {
+function setCursor($input, i){
     const length = i || $input.text().length;
     if(length !== 0) {
         const range = document.createRange();
@@ -88,7 +87,7 @@ $customInputText.on("keydown", function(e){
     }
 });
 
-const deleteFileByExtension = (extension) => {
+function deleteFileByExtension(extension){
     $.ajax({
         url: "/deleteFileByExtension",
         type: "DELETE",
@@ -112,7 +111,7 @@ const deleteFileByExtension = (extension) => {
 
 
 /* 커스텀 확장자를 추가하는 함수 */
-const insertCustomExtension = (text) => {
+function insertCustomExtension(text){
     try {
         $.ajax({
             url: "/insertCustomExtension",
@@ -121,7 +120,6 @@ const insertCustomExtension = (text) => {
             traditional: true,
             success: function (data) {
                 if(data !== true){
-                    // data : List<String>
                     if(confirm("서버에 업로드 된 파일중에 이미 존재하는 확장자가 있습니다. 제거하시겠습니까?\n" + data.join(", "))){
                         deleteFileByExtension(text);
                     }
@@ -155,7 +153,7 @@ const insertCustomExtension = (text) => {
 }
 
 /* 커스텀 확장자를 가져오는 함수 */
-const getCustomItems = () => {
+function getCustomItems(){
     try {
         $.ajax({
             url: "/customExtensions",
@@ -178,19 +176,20 @@ const getCustomItems = () => {
 }
 
 /* 커스텀 확장자를 삭제하는 함수 */
-const deleteCustomItem = () => {
+function deleteCustomItem(){
     const $customItems = $(".custom-item");
     $customItems.off("click");
     $customItems.on("click", function(){
+        const object = this;
         try {
             $.ajax({
                 url: "/deleteCustomExtension",
                 type: "DELETE",
-                data: {extension: this.id},
+                data: {extension: object.id},
                 traditional: true,
                 success: function () {
-                    $(this).remove();
-                    customItems.splice(customItems.indexOf(this.id), 1);
+                    $(object).remove();
+                    customItems.splice(customItems.indexOf(object.id), 1);
                     viewCustomItemCount();
                 },
                 error: function (error) {
@@ -205,7 +204,7 @@ const deleteCustomItem = () => {
 }
 
 /* 커스텀 확장자를 그리는 함수 */
-const viewCustomItems = () => {
+function viewCustomItems(){
     viewCustomItemCount();
     const $customList = $("#custom-list");
     $customList.empty();
@@ -228,7 +227,7 @@ const viewCustomItemCount = () => {
 }
 
 /* 고정 확장자를 가져오는 함수 */
-const getFixedItems = () => {
+function getFixedItems(){
     try {
         $.ajax({
             url: "/fixedExtensions",
@@ -247,17 +246,15 @@ const getFixedItems = () => {
         console.log(e);
         $('.fixed-field').append(guideBox(errorFixedGuide));
     }
-
 }
 getFixedItems();
 
 /* 고정 확장자를 그리는 함수 */
-const viewFixedItems = () => {
+function viewFixedItems(){
     const $fixedList = $("#fixed-list");
     $fixedList.empty();
     fixedItems.forEach(item => {
-        $fixedList.append(
-            `
+        $fixedList.append(`
             <input type="checkbox" id="${item.extension}" ${item.status ? 'checked' : ''}/>
             <label class="input-check" for="${item.extension}">
                 ${item.extension}
@@ -269,7 +266,7 @@ const viewFixedItems = () => {
 }
 
 /* 고정 확장자를 선택하는 함수 */
-const selectFixedItem = () => {
+function selectFixedItem(){
     if(fixedItems.length === 0){
         return;
     }
@@ -289,7 +286,6 @@ const selectFixedItem = () => {
                     if (data === true) {
                         fixedItems.find(item => item.extension === checkBox.id).status = !checkBox.checked;
                         checkBox.checked = !checkBox.checked;
-
                     } else if (data === false) {
                         alert("고정 확장자를 변경하지 못했습니다.")
                     } else {
@@ -297,7 +293,6 @@ const selectFixedItem = () => {
                             deleteFileByExtension(checkBox.id);
                         }
                     }
-
                 },
                 error: function (error) {
                     console.error(error);
@@ -317,7 +312,6 @@ const selectFixedItem = () => {
 $("#custom-add").on("click", function(){
     try{
         if(customItems.length >= 200){
-            // TODO: 알림박스로 교체
             alert("최대 200개까지 추가할 수 있습니다.")
             return;
         }
@@ -325,7 +319,6 @@ $("#custom-add").on("click", function(){
         if(text.length > 0){
             if(customItems.includes(text)){
                 alert("이미 존재하는 확장자입니다.")
-                // TODO: 알림박스로 교체
             }
             else if(text.length > 20){
                 alert("최대 20자까지 입력할 수 있습니다.")
@@ -339,11 +332,7 @@ $("#custom-add").on("click", function(){
                 insertCustomExtension(text.toLowerCase());
             }
         }
-        else{
-            // TODO: 아무것도 입력하지 않았을 때의 처리
-        }
         $customInputText.focus();
-        //     커서 마지막으로 이동
         setCursor($customInputText);
 
     }
@@ -353,6 +342,7 @@ $("#custom-add").on("click", function(){
     }
 })
 
+// 커스텀 확장자를 모두 삭제하는 함수
 $('.clear-block').on("click", function(){
     if($(this).hasClass("custom-clear")) {
         if(customItems.length === 0){
@@ -410,16 +400,9 @@ $('.clear-block').on("click", function(){
                     alert("고정 확장자를 모두 해제하지 못했습니다.")
                 }
             }
-
         }
     }
 })
-
-
-
-
-
-
 
 
 
@@ -457,16 +440,10 @@ function unHighlight(e) {
 }
 
 function handleDrop(e) {
-    // TODO: 중복된 파일이 있는지 확인
-
     unHighlight(e);
-
     const dt = e.originalEvent.dataTransfer;
     const files = dt.files;
-
-
     handleFiles(files);
-
 }
 
 function animateScrollTop($list) {
@@ -546,7 +523,6 @@ function renderFile(file) {
             if(uploadFilesId.length === 0){
                 $dropArea.removeClass("display-none");
             }
-
         }
     })
     animateScrollTop();
@@ -612,7 +588,6 @@ function getFileInformation(){
                 }
 
                 data.forEach(file => {
-
                     const $file = $(
                         `<div class="file" id="uploaded-${file.idx}">
                             <div class="thumbnail">

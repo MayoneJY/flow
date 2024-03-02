@@ -20,13 +20,12 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class FileUtils {
-//    private final String uploadPath = "/Users/jeongyeon/job/flowFiles";
-    private final String uploadPath = "/home/mayone/flow/downloads";
+    private final String uploadPath = "/Users/jeongyeon/job/flowFiles";
+//    private final String uploadPath = "/home/mayone/flow/downloads";
 
 
     // 파일 업로드
     public FileDTO uploadFile(MultipartFile multipartFile){
-
         String originalName = multipartFile.getOriginalFilename();
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         String extension = StringUtils.getFilenameExtension(originalName);
@@ -37,6 +36,7 @@ public class FileUtils {
             e.printStackTrace();
             return null;
         }
+
         return FileDTO.builder()
                 .originalName(originalName)
                 .saveName(uuid + "." + extension)
@@ -49,6 +49,7 @@ public class FileUtils {
     public Resource readFileAsResource(final FileDTO file) {
         String filename = file.getSaveName();
         Path filePath = Paths.get(uploadPath, filename);
+
         try {
             Resource resource = new UrlResource(filePath.toUri());
             if (!resource.exists() || !resource.isFile()) {

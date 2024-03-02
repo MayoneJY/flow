@@ -12,7 +12,7 @@
         DELETE FROM custom_extension WHERE extension = #{extension}
     </delete>
 
-    <delete id="clearcustom_extension">
+    <delete id="clearCustomExtensions">
         DELETE FROM custom_extension
     </delete>
 

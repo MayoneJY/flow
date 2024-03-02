@@ -49,7 +49,6 @@ public class MainController {
             }
             else{
                 return ResponseEntity.ok().body(true);
-
             }
         }
         return ResponseEntity.ok(false);
