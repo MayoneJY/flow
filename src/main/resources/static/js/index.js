@@ -100,7 +100,7 @@ const insertCustomExtension = (text) => {
                 if (data === true) {
                     customItems.push(text);
                     viewCustomItemCount();
-                    $customList = $("#custom-list");
+                    const $customList = $("#custom-list");
                     $customList.append(
                         `<button class="custom-item" id="${text}">
                             ${text}
@@ -528,7 +528,7 @@ function uploadFile() {
         data: uploadFiles,
         processData: false,
         contentType: false,
-        success: function (data) {
+        success: function () {
             alert("파일 업로드에 성공했습니다.")
             animateScrollTop($("#uploaded-files"));
             uploadFiles.delete("file");
@@ -579,7 +579,7 @@ function getFileInformation(){
 
                 data.forEach(file => {
 
-                    $file = $(
+                    const $file = $(
                         `<div class="file" id="uploaded-${file.idx}">
                             <div class="thumbnail">
                                 <span class="material-symbols-outlined uploaded-file-icon">
@@ -637,7 +637,7 @@ function getFileInformation(){
                 })
             }
         },
-        error: function (error) {
+        error: function () {
             $fileUploaded.append(guideBox(errorFileGuide));
         }
     })
