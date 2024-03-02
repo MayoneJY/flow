@@ -70,7 +70,7 @@ $customInputText.on("input", function (){
     const text = $this.text();
     //[a-zA-Z0-9가-힣]{0,20}
     for(let i = 0; i < text.length; i++){
-        if(!/^[a-zA-Z0-9가-힣]{0,20}$/.test(text[i])){
+        if(!/^[a-zA-Z0-9ㄱ-힣]{0,20}$/.test(text[i])){
             $this.text(text.substring(0, i) + text.substring(i + 1));
             setCursor($this, i);
         }
