@@ -139,7 +139,6 @@ const insertCustomExtension = (text) => {
                 );
                 deleteCustomItem();
                 $customInputText.text("");
-                animateScrollTop($customList);
             },
             error: function (error) {
                 console.error(error);
@@ -337,7 +336,7 @@ $("#custom-add").on("click", function(){
                 $customInputText.text("");
             }
             else{
-                insertCustomExtension(text);
+                insertCustomExtension(text.toLowerCase());
             }
         }
         else{
@@ -481,7 +480,7 @@ function handleFiles(files) {
     for(let i = 0; i < files.length; i++){
         const file = files[i];
         const extension = file.name.split('.').pop();
-        if(customItems.includes(extension) || fixedItems.find(item => item.extension === extension && item.status === true)){
+        if(customItems.includes(extension.toLowerCase()) || fixedItems.find(item => item.extension === extension.toLowerCase() && item.status === true)){
             alert("허용되지 않은 확장자입니다.")
             return;
         }
