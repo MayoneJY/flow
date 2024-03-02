@@ -3,10 +3,15 @@ let customItems = [];
 const $customInputText = $("#custom-input-text");
 
 
-const noFileGuide = '업로드된 파일이 없습니다.';
-const errorFileGuide = '파일 정보를 가져오는데 실패했습니다.';
-const errorCustomGuide = '커스텀 확장자를 가져오는데 실패했습니다.';
-const errorFixedGuide = '고정 확장자를 가져오는데 실패했습니다.';
+const NO_FILE_GUIDE = '업로드된 파일이 없습니다.';
+const ERROR_FILE_GUIDE = '파일 정보를 가져오는데 실패했습니다.';
+const ERROR_CUSTOM_GUIDE = '커스텀 확장자를 가져오는데 실패했습니다.';
+const ERROR_FIXED_GUIDE = '고정 확장자를 가져오는데 실패했습니다.';
+const ERROR_FILE_DELETE_MESSAGE = '파일을 삭제하지 못했습니다.';
+const ERROR_FIXED_UPDATE_MESSAGE = '고정 확장자를 변경하지 못했습니다.';
+const SUCCESS_FILE_DELETE_MESSAGE = '성공적으로 파일을 삭제했습니다.';
+const ERROR_FIXED_ALL_CLEAR_MESSAGE = '고정 확장자를 모두 해제하지 못했습니다.';
+const ERROR_CUSTOM_ALL_CLEAR_MESSAGE = '커스텀 확장자를 모두 삭제하지 못했습니다.';
 
 function guideBox(guideMessage){
     return $(`
@@ -142,13 +147,13 @@ function getCustomItems(){
             },
             error: function (error) {
                 console.error(error);
-                $('.custom-field').append(guideBox(errorCustomGuide));
+                $('.custom-field').append(guideBox(ERROR_CUSTOM_GUIDE));
             }
         })
     }
     catch (e) {
         console.log(e);
-        $('.custom-field').append(guideBox(errorCustomGuide));
+        $('.custom-field').append(guideBox(ERROR_CUSTOM_GUIDE));
     }
 }
 
@@ -216,12 +221,12 @@ function getFixedItems(){
             },
             error: function (error) {
                 console.error(error);
-                $('#fixed-list').append(guideBox(errorFixedGuide));
+                $('#fixed-list').append(guideBox(ERROR_FIXED_GUIDE));
             }})
     }
     catch (e) {
         console.log(e);
-        $('.fixed-field').append(guideBox(errorFixedGuide));
+        $('.fixed-field').append(guideBox(ERROR_FIXED_GUIDE));
     }
 }
 getFixedItems();
@@ -264,22 +269,22 @@ function selectFixedItem(){
                         fixedItems.find(item => item.extension === checkBox.id).status = !checkBox.checked;
                         checkBox.checked = !checkBox.checked;
                     } else if (data === false) {
-                        alert("고정 확장자를 변경하지 못했습니다.")
+                        alert(ERROR_FIXED_UPDATE_MESSAGE)
                     } else {
-                        if(confirm("서버에 업로드 된 파일중에 이미 존재하는 확장자가 있습니다. 제거하시겠습니까?\n" + data.join(", "))){
+                        if(confirm("서버에 업로드 된 파일중에 이미 존재하는 확장자가 있습니다.\n제거하시겠습니까?\n" + data.join(", "))){
                             deleteFileByExtension(checkBox.id);
                         }
                     }
                 },
                 error: function (error) {
                     console.error(error);
-                    alert("고정 확장자를 변경하지 못했습니다.")
+                    alert(ERROR_FIXED_UPDATE_MESSAGE)
                 }
             })
         }
         catch (e) {
             console.log(e);
-            alert("고정 확장자를 변경하지 못했습니다.")
+            alert(ERROR_FIXED_UPDATE_MESSAGE)
         }
     });
 }
@@ -336,18 +341,18 @@ $('.clear-block').on("click", function(){
                             $("#custom-list").empty();
                             viewCustomItemCount();
                         } else {
-                            alert("커스텀 확장자를 삭제하지 못했습니다.")
+                            alert(ERROR_CUSTOM_ALL_CLEAR_MESSAGE)
                         }
                     },
                     error: function (error) {
                         console.error(error);
-                        alert("커스텀 확장자를 삭제하지 못했습니다.")
+                        alert(ERROR_CUSTOM_ALL_CLEAR_MESSAGE)
                     }
                 })
             }
             catch (e) {
                 console.log(e);
-                alert("커스텀 확장자를 삭제하지 못했습니다.")
+                alert(ERROR_CUSTOM_ALL_CLEAR_MESSAGE)
             }
         }
     }
@@ -363,18 +368,18 @@ $('.clear-block').on("click", function(){
                                 fixedItems.forEach(item => item.status = false);
                                 $('input[type="checkbox"]').prop("checked", false);
                             } else {
-                                alert("고정 확장자를 모두 해제하지 못했습니다.")
+                                alert(ERROR_FIXED_ALL_CLEAR_MESSAGE)
                             }
                         },
                         error: function (error) {
                             console.error(error);
-                            alert("고정 확장자를 모두 해제하지 못했습니다.")
+                            alert(ERROR_FIXED_ALL_CLEAR_MESSAGE)
                         }
                     })
                 }
                 catch (e) {
                     console.log(e);
-                    alert("고정 확장자를 모두 해제하지 못했습니다.")
+                    alert(ERROR_FIXED_ALL_CLEAR_MESSAGE)
                 }
             }
         }
@@ -555,7 +560,7 @@ function getFileInformation(){
         type: "GET",
         success: function (data) {
             if(data.length === 0){
-                $fileUploaded.append(guideBox(noFileGuide));
+                $fileUploaded.append(guideBox(NO_FILE_GUIDE));
             }
             else{
 
@@ -607,19 +612,19 @@ function getFileInformation(){
                                 success: function (data) {
                                     if(data === true){
                                         $("#uploaded-" + file.idx).remove();
-                                        alert("성공적으로 파일을 삭제했습니다.")
+                                        alert(SUCCESS_FILE_DELETE_MESSAGE)
                                         if($uploadedFiles.children().length === 0) {
-                                            $fileUploaded.append(guideBox(noFileGuide));
+                                            $fileUploaded.append(guideBox(NO_FILE_GUIDE));
                                             $uploadedFiles.remove();
                                         }
                                     }
                                     else{
-                                        alert("파일을 삭제하지 못했습니다.")
+                                        alert(ERROR_FILE_DELETE_MESSAGE)
                                     }
                                 },
                                 error: function (error) {
                                     console.error(error);
-                                    alert("파일을 삭제하지 못했습니다.")
+                                    alert(ERROR_FILE_DELETE_MESSAGE)
                                 }
                             })
                         }
@@ -628,7 +633,7 @@ function getFileInformation(){
             }
         },
         error: function () {
-            $fileUploaded.append(guideBox(errorFileGuide));
+            $fileUploaded.append(guideBox(ERROR_FILE_GUIDE));
         }
     })
 }
@@ -641,16 +646,16 @@ function deleteFileByExtension(extension){
         traditional: true,
         success: function (data) {
             if(data === true){
-                alert("성공적으로 파일을 제거했습니다.")
+                alert(SUCCESS_FILE_DELETE_MESSAGE)
                 allLoad()
             }
             else{
-                alert("파일을 제거하지 못했습니다.")
+                alert(ERROR_FILE_DELETE_MESSAGE)
             }
         },
         error: function (error) {
             console.error(error);
-            alert("파일을 제거하지 못했습니다.")
+            alert(ERROR_FILE_DELETE_MESSAGE)
         }
     })
 }
