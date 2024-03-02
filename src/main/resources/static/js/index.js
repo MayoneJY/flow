@@ -22,6 +22,13 @@ function guideBox(guideMessage){
 }
 
 
+// AllLoad
+const allLoad = () => {
+    getFixedItems();
+    getCustomItems();
+    getFileInformation();
+
+}
 
 // 드래그 방지
 $(document).on("selectstart", function(e){
@@ -143,7 +150,6 @@ const getCustomItems = () => {
         $('.custom-field').append(guideBox(errorCustomGuide));
     }
 }
-getCustomItems();
 
 /* 커스텀 확장자를 삭제하는 함수 */
 const deleteCustomItem = () => {
@@ -177,8 +183,10 @@ const deleteCustomItem = () => {
 /* 커스텀 확장자를 그리는 함수 */
 const viewCustomItems = () => {
     viewCustomItemCount();
+    const $customList = $("#custom-list");
+    $customList.empty();
     customItems.forEach(item => {
-        $("#custom-list").append(
+        $customList.append(
             `<button class="custom-item" id="${item}">
                 ${item}
                 <span class="material-symbols-outlined custom-trash-icon">
@@ -221,8 +229,10 @@ getFixedItems();
 
 /* 고정 확장자를 그리는 함수 */
 const viewFixedItems = () => {
+    const $fixedList = $("#fixed-list");
+    $fixedList.empty();
     fixedItems.forEach(item => {
-        $("#fixed-list").append(
+        $fixedList.append(
             `
             <input type="checkbox" id="${item.extension}" ${item.status ? 'checked' : ''}/>
             <label class="input-check" for="${item.extension}">
@@ -520,16 +530,18 @@ function uploadFile() {
         contentType: false,
         success: function (data) {
             alert("파일 업로드에 성공했습니다.")
-            getFileInformation();
             animateScrollTop($("#uploaded-files"));
             uploadFiles.delete("file");
             $fileList.empty();
             uploadFilesId.splice(0, uploadFilesId.length);
             $dropArea.removeClass("display-none");
+            allLoad();
         },
         error: function (error) {
             alert(error.responseText)
             console.error(error);
+            allLoad();
+
         }
     })
 }
@@ -631,4 +643,4 @@ function getFileInformation(){
     })
 }
 
-getFileInformation();
+allLoad();
