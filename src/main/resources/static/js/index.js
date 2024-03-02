@@ -129,7 +129,7 @@ const insertCustomExtension = (text) => {
                 customItems.push(text);
                 viewCustomItemCount();
                 const $customList = $("#custom-list");
-                $customList.append(
+                $customList.prepend(
                     `<button class="custom-item" id="${text}">
                         ${text}
                         <span class="material-symbols-outlined custom-trash-icon">

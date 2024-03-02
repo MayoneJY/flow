@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.mayone.flow.mapper.ExtensionMapper">
     <select id="selectExtensions" resultType='java.lang.String'>
-        SELECT extension FROM custom_extension
+        SELECT extension FROM custom_extension ORDER BY idx DESC
     </select>
     <insert id="insertCustomExtension" parameterType="java.lang.String">
         INSERT INTO custom_extension (extension) VALUES (#{extension})
