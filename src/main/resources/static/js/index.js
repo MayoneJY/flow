@@ -506,7 +506,7 @@ function renderFile(file) {
 }
 
 function uploadFile() {
-    if(uploadFiles.length === 0){
+    if(uploadFiles.length === 0 || uploadFilesId.length === 0){
         return;
     }
     $.ajax({
