@@ -88,6 +88,29 @@ $customInputText.on("keydown", function(e){
     }
 });
 
+const deleteFileByExtension = (extension) => {
+    $.ajax({
+        url: "/deleteFileByExtension",
+        type: "DELETE",
+        data: {extension: extension},
+        traditional: true,
+        success: function (data) {
+            if(data === true){
+                alert("성공적으로 파일을 제거했습니다.")
+                allLoad()
+            }
+            else{
+                alert("파일을 제거하지 못했습니다.")
+            }
+        },
+        error: function (error) {
+            console.error(error);
+            alert("파일을 제거하지 못했습니다.")
+        }
+    })
+}
+
+
 /* 커스텀 확장자를 추가하는 함수 */
 const insertCustomExtension = (text) => {
     try {
@@ -96,7 +119,13 @@ const insertCustomExtension = (text) => {
             type: "POST",
             data: {extension: text},
             traditional: true,
-            success: function () {
+            success: function (data) {
+                if(data !== true){
+                    // data : List<String>
+                    if(confirm("서버에 업로드 된 파일중에 이미 존재하는 확장자가 있습니다. 제거하시겠습니까?\n" + data.join(", "))){
+                        deleteFileByExtension(text);
+                    }
+                }
                 customItems.push(text);
                 viewCustomItemCount();
                 const $customList = $("#custom-list");
@@ -264,9 +293,14 @@ const selectFixedItem = () => {
                         fixedItems.find(item => item.extension === checkBox.id).status = !checkBox.checked;
                         checkBox.checked = !checkBox.checked;
 
-                    } else {
+                    } else if (data === false) {
                         alert("고정 확장자를 변경하지 못했습니다.")
+                    } else {
+                        if(confirm("서버에 업로드 된 파일중에 이미 존재하는 확장자가 있습니다. 제거하시겠습니까?\n" + data.join(", "))){
+                            deleteFileByExtension(checkBox.id);
+                        }
                     }
+
                 },
                 error: function (error) {
                     console.error(error);

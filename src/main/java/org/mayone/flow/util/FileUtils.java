@@ -12,6 +12,9 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Component
@@ -65,5 +68,16 @@ public class FileUtils {
 
     public String getFileExtension(MultipartFile file) {
         return StringUtils.getFilenameExtension(file.getOriginalFilename());
+    }
+
+    // 서버에 저장된 파일에 추가하려는 확장자가 있는지 확인
+    public List<String> checkExtension(List<FileDTO> fileDTO, String extension) {
+        List<String> fileNames = new ArrayList<>();
+        for (FileDTO file : fileDTO) {
+            if (Objects.equals(StringUtils.getFilenameExtension(file.getOriginalName()), extension)) {
+                fileNames.add(file.getOriginalName());
+            }
+        }
+        return fileNames;
     }
 }

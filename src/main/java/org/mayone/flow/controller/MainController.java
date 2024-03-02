@@ -37,8 +37,22 @@ public class MainController {
 
     // 고정 확장자를 수정하는 메소드
     @PutMapping("/updateFixedExtension")
-    public ResponseEntity<Boolean> updateFixedExtension(@RequestBody FixedExtensionDTO fixedExtensionDTO) {
-        return ResponseEntity.ok(extensionService.updateFixedExtension(fixedExtensionDTO));
+    public ResponseEntity<?> updateFixedExtension(@RequestBody FixedExtensionDTO fixedExtensionDTO) {
+        if(extensionService.updateFixedExtension(fixedExtensionDTO)){
+            if(fixedExtensionDTO.isStatus()){
+                List<FileDTO> fileDTO = fileService.fileInformation();
+                List<String> fileName = fileUtils.checkExtension(fileDTO, fixedExtensionDTO.getExtension());
+                if (!fileName.isEmpty())
+                    return ResponseEntity.ok().body(fileName);
+                else
+                    return ResponseEntity.ok().body(true);
+            }
+            else{
+                return ResponseEntity.ok().body(true);
+
+            }
+        }
+        return ResponseEntity.ok(false);
     }
 
     // 고정 확장자를 조회하는 메소드
@@ -57,8 +71,15 @@ public class MainController {
     @PostMapping("/insertCustomExtension")
     public ResponseEntity<?> insertCustomExtension(String extension) {
         int result = extensionService.insertExtension(extension);
-        if (result == 1)
-            return ResponseEntity.ok().body(true);
+        if (result == 1){
+            // 업로드 된 파일에 해당 확장자가 있는지 확인
+            List<FileDTO> fileDTO = fileService.fileInformation();
+            List<String> fileName = fileUtils.checkExtension(fileDTO, extension);
+            if (!fileName.isEmpty())
+                return ResponseEntity.ok().body(fileName);
+            else
+                return ResponseEntity.ok().body(true);
+        }
         else if (result == 2)
             return ResponseEntity.badRequest().body("이미 존재하는 확장자입니다.");
         else
@@ -116,6 +137,26 @@ public class MainController {
     @DeleteMapping("/deleteFile")
     public ResponseEntity<Boolean> deleteFile(@RequestBody FileDTO fileDTO) {
         return ResponseEntity.ok(fileService.deleteFile(fileDTO));
+    }
+
+    // 파일을 삭제하는 메소드
+    @DeleteMapping("/deleteFileByExtension")
+    public ResponseEntity<Boolean> deleteFileByExtension(String extension) {
+        try{
+            List<FileDTO> fileDTO = fileService.fileInformation();
+            List<String> fileName = fileUtils.checkExtension(fileDTO, extension);
+            if (fileName.isEmpty())
+                return ResponseEntity.ok(false);
+
+            for (String name : fileName) {
+                FileDTO dto = fileDTO.stream().filter(file -> file.getOriginalName().equals(name)).findFirst().orElse(null);
+                fileService.deleteFile(dto);
+            }
+            return ResponseEntity.ok(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok(false);
+        }
     }
 
 }

@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class FixedExtensionDTO {
     private String extension;
-    boolean status;
+    private boolean status;
 }
