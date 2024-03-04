@@ -310,9 +310,8 @@ $(document).ready(function () {
                     alert("고정 확장자는 추가할 수 없습니다.")
                     $customInputText.text("");
                 }
-                // html 태그가 있으면 추가하지 않음
-                else if (/<[^>]+>/g.test(text)) {
-                    alert("html 태그는 추가할 수 없습니다.")
+                else if (!/^[a-zA-Z0-9ㄱ-힣]{0,20}$/.test(text)) {
+                    alert("영어, 숫자, 한글만 입력할 수 있습니다.")
                     $customInputText.text("");
                 } else {
                     insertCustomExtension(text.toLowerCase());

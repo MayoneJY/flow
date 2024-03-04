@@ -28,11 +28,15 @@ public class ExtensionServiceImpl implements ExtensionService {
      * return 0: 확장자 추가 실패
      * return 1: 확장자 추가 성공
      * return 2: 이미 존재하는 확장자
+     * return 3: 의도하지 않는 글이 들어올 경우 (특수문자, 공백 등)
      * @param extension 추가할 확장자
      * @return 추가 성공 여부
      */
     @Transactional
     public int insertExtension(String extension) {
+        if (!extension.matches("^[a-zA-Z0-9ㄱ-힣]*$")) {
+            return 3;
+        }
         ExtensionMapper em = sqlSession.getMapper(ExtensionMapper.class);
         try {
             return em.insertCustomExtension(extension) ? 1 : 0;

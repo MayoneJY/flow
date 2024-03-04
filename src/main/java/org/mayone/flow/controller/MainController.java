@@ -98,6 +98,8 @@ public class MainController {
         }
         else if (result == 2)
             return ResponseEntity.badRequest().body("이미 존재하는 확장자입니다.");
+        else if (result == 3)
+            return ResponseEntity.badRequest().body("특수문자, 공백 등은 입력할 수 없습니다.");
         else
             return ResponseEntity.badRequest().body("확장자 추가에 실패했습니다.");
     }
