@@ -543,7 +543,7 @@ $(document).ready(function () {
     $fileList.on("dragover", highlight);
     $dropArea.on("dragleave", unHighlight);
     $dropArea.on("drop", handleDrop);
-
+    $('#chooseFile').on("change", function (){handleFiles(this.files)});
 
     // 파일 정보 가져오기
     const $fileUploaded = $("#file-uploaded");
